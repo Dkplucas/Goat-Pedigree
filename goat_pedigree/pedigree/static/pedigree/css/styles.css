@@ -1,0 +1,137 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+  }
+  
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+  }
+  
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .logo img {
+    height: 40px;
+    width: auto;
+  }
+  
+  header nav ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+  }
+  
+  header nav ul li a {
+    color: white;
+    text-decoration: none;
+  }
+  
+  .user-profile {
+    font-size: 16px;
+  }
+  
+  main {
+    padding: 20px;
+  }
+  
+  .search-bar {
+    margin-bottom: 20px;
+  }
+  
+  .search-bar input {
+    padding: 8px;
+    width: 300px;
+  }
+  
+  .search-bar button {
+    padding: 8px 12px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .add-goat {
+    padding: 10px 15px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    margin-bottom: 20px;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  table th, table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+  }
+  
+  table th {
+    background-color: #4CAF50;
+    color: white;
+  }
+  
+  table td button {
+    padding: 5px 10px;
+    margin-right: 5px;
+    cursor: pointer;
+  }
+ 
+footer {
+  background-color: #4CAF50;
+  padding: 20px 0;
+  margin-top: 40px;
+  text-align: center;
+  border-top: 1px solid white;
+}
+
+footer p {
+  margin: 0;
+  color: white;
+}
+
+footer a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
+
+footer .float-right {
+  float: right;
+}
+
+/* static/pedigree/css/styles.css */
+.link {
+  fill: none;
+  stroke: #ccc;
+  stroke-width: 2px;
+}
+
+.node circle {
+  stroke: #333;
+  stroke-width: 1.5px;
+}
+
+.node text {
+  font-family: Arial, sans-serif;
+  font-size: 12px;
+  fill: #333;
+}
