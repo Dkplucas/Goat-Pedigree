@@ -1,9 +1,12 @@
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from django.db.models import Count
+from django.db.models import Count, Avg, F, ExpressionWrapper, fields
 from django.utils import timezone
 from .models import Goat
 import json
+import logging
+
+logger = logging.getLogger(__name__)
 
 # Home Page
 def home(request):
@@ -37,8 +40,8 @@ def pedigree_charts(request):
         return {
             "name": goat.name,
             "id": goat.id,
-            "sire": build_pedigree(goat.sire),
-            "dam": build_pedigree(goat.dam),
+            "sire": build_pedigree(goat.sire) if goat.sire else None,
+            "dam": build_pedigree(goat.dam) if goat.dam else None,
         }
 
     # Build the pedigree for the selected goat
@@ -60,40 +63,35 @@ def about(request):
 # Reports Page
 @login_required
 def reports(request):
-    # Total number of goats
-    total_goats = Goat.objects.count()
+    try:
+        # Total number of goats
+        total_goats = Goat.objects.count()
 
-    # Number of goats by breed
-    goats_by_breed = Goat.objects.values('breed').annotate(count=Count('id')).order_by('-count')
+        # Number of goats by breed
+        goats_by_breed = Goat.objects.values('breed').annotate(count=Count('id')).order_by('-count')
 
-    # Number of goats by gender
-    goats_by_gender = Goat.objects.values('gender').annotate(count=Count('id')).order_by('-count')
+        # Number of goats by gender
+        goats_by_gender = Goat.objects.values('gender').annotate(count=Count('id')).order_by('-count')
 
-    # Calculate average age of goats
-    today = timezone.now().date()
-    total_age = 0
-    valid_goats = 0  # Count of goats with valid birth dates
+        # Calculate average age of goats using aggregation
+        today = timezone.now().date()
+        average_age = Goat.objects.exclude(birth_date__isnull=True).annotate(
+            age=ExpressionWrapper(
+                (today - F('birth_date')) / 365,
+                output_field=fields.FloatField()
+            )
+        ).aggregate(avg_age=Avg('age'))['avg_age']
 
-    for goat in Goat.objects.all():
-        if goat.birth_date:  # Check if birth_date is not None
-            try:
-                age = (today - goat.birth_date).days / 365  # Convert days to years
-                total_age += age
-                valid_goats += 1
-            except (TypeError, ValueError):
-                # Handle invalid birth_date format
-                continue
-
-    # Calculate average age only if there are goats with valid birth dates
-    average_age = total_age / valid_goats if valid_goats > 0 else None
-
-    # Pass the data to the template
-    return render(request, 'pedigree/reports.html', {
-        'total_goats': total_goats,
-        'goats_by_breed': goats_by_breed,
-        'goats_by_gender': goats_by_gender,
-        'average_age': average_age,
-    })
+        # Pass the data to the template
+        return render(request, 'pedigree/reports.html', {
+            'total_goats': total_goats,
+            'goats_by_breed': goats_by_breed,
+            'goats_by_gender': goats_by_gender,
+            'average_age': average_age,
+        })
+    except Exception as e:
+        logger.error(f"Error in reports view: {e}")
+        raise  # Re-raise the exception after logging
 
 # Custom 404 Page
 def custom_404(request, exception=None):
