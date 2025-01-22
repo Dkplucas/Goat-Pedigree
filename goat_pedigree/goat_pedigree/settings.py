@@ -148,5 +148,6 @@ IMPORT_EXPORT_FORMATS = [  # Supported formats
     ('json', 'JSON'),
 ]
 
-# settings.py
-LOGOUT_REDIRECT_URL = 'home'  # Redirect to the home page after logout
+# Login 
+LOGIN_REDIRECT_URL = '/pedigree/goat-profiles/'  # Redirect to the goat profiles page after login
+LOGIN_URL = '/accounts/login/'  # The URL to redirect to for login

@@ -1,5 +1,7 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib import messages
 from django.db.models import Count, Avg, F, ExpressionWrapper, fields
 from django.utils import timezone
 from .models import Goat
@@ -73,14 +75,24 @@ def reports(request):
         # Number of goats by gender
         goats_by_gender = Goat.objects.values('gender').annotate(count=Count('id')).order_by('-count')
 
-        # Calculate average age of goats using aggregation
+        # Calculate average age of goats in Python
         today = timezone.now().date()
-        average_age = Goat.objects.exclude(birth_date__isnull=True).annotate(
-            age=ExpressionWrapper(
-                (today - F('birth_date')) / 365,
-                output_field=fields.FloatField()
+        goats_with_age = Goat.objects.exclude(birth_date__isnull=True).annotate(
+            age_days=ExpressionWrapper(
+                today - F('birth_date'),
+                output_field=fields.DurationField()
             )
-        ).aggregate(avg_age=Avg('age'))['avg_age']
+        )
+
+        total_age_years = 0
+        count = 0
+        for goat in goats_with_age:
+            age_days = goat.age_days.days  # Get the age in days
+            age_years = age_days / 365.0  # Convert to years
+            total_age_years += age_years
+            count += 1
+
+        average_age = total_age_years / count if count > 0 else 0
 
         # Pass the data to the template
         return render(request, 'pedigree/reports.html', {
@@ -92,7 +104,19 @@ def reports(request):
     except Exception as e:
         logger.error(f"Error in reports view: {e}")
         raise  # Re-raise the exception after logging
-
+        
 # Custom 404 Page
 def custom_404(request, exception=None):
     return render(request, '404.html', status=404)
+
+# Signup pages
+def signup(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Account created successfully! You can now log in.')
+            return redirect('login')  # Redirect to the login page after successful signup
+    else:
+        form = UserCreationForm()
+    return render(request, 'registration/signup.html', {'form': form})

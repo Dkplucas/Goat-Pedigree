@@ -8,6 +8,7 @@ urlpatterns = [
     path('pedigree-charts/', views.pedigree_charts, name='pedigree_charts'),
     path('reports/', views.reports, name='reports'),
     path('about/', views.about, name='about'),
+    path('signup/', views.signup, name='signup'),
 ]
 
 # Set the custom 404 handler

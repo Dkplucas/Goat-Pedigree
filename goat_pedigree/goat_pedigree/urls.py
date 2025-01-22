@@ -24,6 +24,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home, name='home'),  # Root URL
     path('pedigree/', include('pedigree.urls')),  # App-specific URLs
+    path('accounts/', include('django.contrib.auth.urls')),
 
     # Logout URL
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
