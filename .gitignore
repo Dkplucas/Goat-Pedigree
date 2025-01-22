@@ -1,0 +1,48 @@
+# Ignore Python compiled files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Ignore virtual environments
+myenv/
+
+# Ignore environment variables
+.env
+.env.local
+
+# Ignore IDE-specific files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Ignore database files
+*.sqlite3
+*.db
+
+# Ignore static files (if collected elsewhere)
+staticfiles/
+
+# Ignore media files
+media/
+
+# Ignore macOS system files
+.DS_Store
+
+# Ignore pytest cache
+.pytest_cache/
+
+# Ignore coverage reports
+.coverage
+htmlcov/
+
+# Ignore pipenv files
+Pipfile
+Pipfile.lock
+
+# Ignore Celery files
+celerybeat-schedule
+celerybeat.pid
+
+# Ignore logs
+*.log
