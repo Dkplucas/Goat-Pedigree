@@ -61,7 +61,6 @@ pyOpenSSL==21.0.0
 pyparsing==2.4.7
 pyrsistent==0.18.1
 pyserial==3.5
-python-apt==2.4.0+ubuntu4
 python-decouple==3.8
 pytz==2022.1
 PyYAML==5.4.1
