@@ -1,0 +1,22 @@
+databases:
+  - name: goat_pedigreedb
+    plan: free
+    databaseName: goat_pedigree
+    user: goat_pedigree
+
+services:
+  - type: web
+    plan: free
+    name: goat_pedigree
+    runtime: python
+    buildCommand: "./build.sh"
+    startCommand: "python -m gunicorn goat_pedigree.asgi:application -k uvicorn.workers.UvicornWorker"
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: goat_pedigreedb
+          property: connectionString
+      - key: SECRET_KEY
+        generateValue: true
+      - key: WEB_CONCURRENCY
+        value: 4
