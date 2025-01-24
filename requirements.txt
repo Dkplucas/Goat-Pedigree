@@ -16,7 +16,7 @@ dbus-python==1.2.18
 diff-match-patch==20241021
 distlib==0.3.4
 distro==1.7.0
-distro-info==1.1+ubuntu0.2
+distro-info==1.0
 dj-database-url==2.3.0
 Django==3.2.1
 django-appconf==1.0.6
