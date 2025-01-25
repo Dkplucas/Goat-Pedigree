@@ -61,13 +61,14 @@ TEMPLATES = [
 WSGI_APPLICATION = 'goat_pedigree.wsgi.application'
 
 # Database
-if not DEBUG:
+DATABASE_URL = os.getenv('DATABASE_URL', '')
+
+if DATABASE_URL:
     DATABASES = {
-        'default': dj_database_url.parse(
-            os.environ.get('DATABASE_URL'),
-        )
+        'default': dj_database_url.parse(DATABASE_URL)
     }
 else:
+    # Fallback for local development (e.g., SQLite)
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
