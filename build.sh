@@ -7,6 +7,6 @@ pip install PyYAML==6.0.1
 # Exit on error
 set -o errexit
 
-pip install -r requirements.txt
+pip install -r requirements.txt --ignore-installed virtualenv
 python manage.py collectstatic --noinput
 python manage.py migrate
