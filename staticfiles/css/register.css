@@ -1,0 +1,38 @@
+/* Custom styles for the registration page */
+.card {
+  max-width: 400px; /* Set a maximum width for the registration box */
+  margin: 0 auto; /* Center the registration box horizontally */
+  border-radius: 10px; /* Add rounded corners */
+}
+
+.card-body {
+  padding: 2rem; /* Adjust padding inside the card */
+}
+
+.card-title {
+  font-size: 1.5rem; /* Adjust the title font size */
+  font-weight: bold; /* Make the title bold */
+}
+
+.form-label {
+  font-weight: 500; /* Make form labels slightly bold */
+}
+
+.btn-primary {
+  background-color: #007bff; /* Primary button color */
+  border: none; /* Remove button border */
+  padding: 0.5rem 1rem; /* Adjust button padding */
+}
+
+.btn-primary:hover {
+  background-color: #0056b3; /* Darker color on hover */
+}
+
+.text-center a {
+  color: #007bff; /* Link color */
+  text-decoration: none; /* Remove underline */
+}
+
+.text-center a:hover {
+  text-decoration: underline; /* Add underline on hover */
+}

@@ -1,0 +1,162 @@
+{% extends 'goats/base.html' %} {% load static %} {% block content %}
+<!-- Prof DOSSA Luc -->
+<section id="Project" class="my-5">
+  <div class="container">
+    <div class="row gy-4 align-items-center">
+      <div class="col-12 col-md-6">
+        <h1 class="fw-bold">
+          Luc Hippolyte Dossa (Full Professor at University of Abomey-Calavi)
+        </h1>
+        <h2 class="fw-light">
+          Using a holistic system approach, my research work has been on
+          improving the understanding of animal agriculture production systems
+          and its contribution to livelihoods in Africa.
+        </h2>
+      </div>
+      <div class="col-12 col-md-6">
+        <img
+          src="{% static 'img/Luc-Dossa.png' %}"
+          alt="Professor DOSSA Luc Hippolyte"
+          class="img-fluid"
+          style="
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+          "
+        />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Prof Ibi -->
+<section id="Database" class="my-5 py-5 bg-white">
+  <div class="container">
+    <div class="row gy-4 align-items-center">
+      <!-- Image Column (Left) -->
+      <div class="col-12 col-md-6 order-md-1 order-2">
+        <img
+          src="{% static 'img/IBI.jpg' %}"
+          alt="Assoc. Prof. Dr. Ibi Takayuki"
+          class="img-fluid"
+          style="
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+          "
+        />
+      </div>
+
+      <!-- Text Content Column (Right) -->
+      <div class="col-12 col-md-6 order-md-2 order-1">
+        <div class="p-4">
+          <h1 class="fw-bold display-4">
+            Assoc. Prof. Dr. Ibi Takayuki (Okayama University)
+          </h1>
+          <p class="lead mt-3">
+            Researcher in Animal breeding and Genetics working in partnership
+            with the Project.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Prof DOSSOU KPONGAN Lucas -->
+<section id="Project" class="my-5">
+  <div class="container">
+    <div class="row gy-4 align-items-center">
+      <div class="col-12 col-md-6">
+        <h1 class="fw-bold">Lucas DOSSOU KPONGAN (Ph.D. Student)</h1>
+        <h2 class="fw-light">
+          Developer and specialist in Animal breeding and Genetics.
+        </h2>
+      </div>
+      <div class="col-12 col-md-6">
+        <img
+          src="{% static 'img/lucas.jpg' %}"
+          alt="Lucas DOSSOU KPONGAN"
+          class="img-fluid"
+          style="
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+          "
+        />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Contact form for the website -->
+<section id="contact" class="my-5 py-5 bg-light">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="card border-0 shadow">
+          <div class="card-body p-5">
+            <h2 class="text-center mb-4">Contact Us</h2>
+            <p class="text-center text-muted mb-4">
+              Want to contribute to the project? We'd love to hear from you!
+            </p>
+
+            {% if messages %} {% for message in messages %}
+            <div class="alert alert-success" role="alert">{{ message }}</div>
+            {% endfor %} {% endif %}
+
+            <form method="post">
+              {% csrf_token %}
+              <div class="mb-3">
+                <label for="name" class="form-label">Name</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="name"
+                  name="name"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="email" class="form-label">Email address</label>
+                <input
+                  type="email"
+                  class="form-control"
+                  id="email"
+                  name="email"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="subject" class="form-label">Subject</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="subject"
+                  name="subject"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="message" class="form-label">Message</label>
+                <textarea
+                  class="form-control"
+                  id="message"
+                  name="message"
+                  rows="5"
+                  required
+                ></textarea>
+              </div>
+              <div class="text-center">
+                <button type="submit" class="btn btn-primary px-5">
+                  <i class="fas fa-paper-plane me-2"></i>Send Message
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

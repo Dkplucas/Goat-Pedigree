@@ -1,0 +1,641 @@
+{% load static %} {% load static tailwind_tags %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Goat Reports - Goat Pedigree Management</title>
+    <meta
+      name="description"
+      content="View comprehensive reports and statistics about your goat herd"
+    />
+    <meta
+      name="keywords"
+      content="goat reports, herd statistics, goat management, livestock reports"
+    />
+    <meta
+      property="og:title"
+      content="Goat Reports - Goat Pedigree Management"
+    />
+    <meta
+      property="og:description"
+      content="View comprehensive reports and statistics about your goat herd"
+    />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary" />
+    <meta
+      name="twitter:title"
+      content="Goat Reports - Goat Pedigree Management"
+    />
+    <meta
+      name="twitter:description"
+      content="View comprehensive reports and statistics about your goat herd"
+    />
+
+    <!-- Favicons -->
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="{% static 'favicon/apple-touch-icon.png' %}"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="{% static 'favicon/favicon-32x32.png' %}"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="{% static 'favicon/favicon-16x16.png' %}"
+    />
+    <link rel="manifest" href="{% static 'favicon/site.webmanifest' %}" />
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Include React and ReactDOM -->
+    <script src="{% static 'js/react.production.min.js' %}"></script>
+    <script src="{% static 'js/react-dom.production.min.js' %}"></script>
+    {% tailwind_css %}
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Custom Styles -->
+    <style>
+      .nav-custom {
+        background-color: #4caf50;
+        height: 80px;
+        width: 100%;
+        position: relative;
+        z-index: 999;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .nav-container {
+        max-width: 1140px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 100%;
+        padding: 0 15px;
+        position: relative;
+      }
+
+      .nav-logo {
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        color: white;
+      }
+
+      .nav-logo-image {
+        height: 30px;
+        width: auto;
+        margin-right: 10px;
+        border-radius: 4px;
+      }
+
+      .nav-logo-text {
+        font-weight: bold;
+        font-size: 1.25rem;
+      }
+
+      .nav-menu {
+        display: flex;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+
+      .nav-item {
+        margin: 0 15px;
+      }
+
+      .nav-link {
+        color: white;
+        text-decoration: none;
+        padding: 8px 12px;
+        border-radius: 4px;
+        transition: background-color 0.2s;
+      }
+
+      .nav-link:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+      }
+
+      .nav-link-active {
+        background-color: rgba(255, 255, 255, 0.2);
+        font-weight: bold;
+      }
+
+      .nav-toggle {
+        display: none;
+      }
+
+      .nav-toggle-label {
+        display: none;
+      }
+
+      footer {
+        background-color: #4caf50;
+        color: white;
+        padding: 20px 0;
+        text-align: center;
+      }
+
+      footer p {
+        margin: 0;
+      }
+      body {
+        background-color: #f3f4f6;
+        margin: 0;
+        padding: 0;
+      }
+
+      .hover-shadow {
+        transition: box-shadow 0.3s ease-in-out;
+      }
+
+      .hover-shadow:hover {
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+      }
+
+      .bg-blue-600,
+      .bg-green-500 {
+        transition: width 1s ease-in-out;
+      }
+
+      @media (max-width: 640px) {
+        .container {
+          padding-left: 1rem;
+          padding-right: 1rem;
+        }
+      }
+
+      @media print {
+        .container {
+          max-width: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Insert your header manually here -->
+    <header>
+      <nav class="nav-custom">
+        <div class="nav-container">
+          <a href="{% url 'home' %}" class="nav-logo">
+            <img
+              src="{% static 'img/logo.webp' %}"
+              alt="Goat Pedigree Logo"
+              class="nav-logo-image"
+              loading="lazy"
+            />
+            <span class="nav-logo-text">Goat Pedigree</span>
+          </a>
+          <label for="nav-toggle" class="nav-toggle-label">
+            <span></span>
+          </label>
+          <ul class="nav-menu">
+            <li class="nav-item">
+              <a href="{% url 'home' %}" class="nav-link nav-link">Home</a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'inventory' %}" class="nav-link">Inventory</a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'tree' %}" class="nav-link">Tree</a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'reports' %}" class="nav-link">Reports</a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'about' %}" class="nav-link">About</a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'admin:index' %}" class="nav-link">Admin</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </header>
+
+    <!-- React App Container -->
+    <div id="root"></div>
+
+    {% verbatim %}
+    <script>
+      function initializeApp() {
+        // Components
+        function StatCard({ title, value, icon, color }) {
+          try {
+            return React.createElement(
+              "div",
+              {
+                className:
+                  "bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow",
+                "data-name": "stat-card",
+              },
+              React.createElement(
+                "div",
+                { className: "flex items-center justify-between" },
+                React.createElement(
+                  "div",
+                  null,
+                  React.createElement(
+                    "h3",
+                    { className: "text-gray-500 text-sm uppercase" },
+                    title
+                  ),
+                  React.createElement(
+                    "p",
+                    { className: `text-2xl font-bold mt-2 text-${color}-600` },
+                    value
+                  )
+                ),
+                React.createElement(
+                  "div",
+                  { className: `text-${color}-500 text-3xl` },
+                  React.createElement("i", { className: `fas fa-${icon}` })
+                )
+              )
+            );
+          } catch (error) {
+            console.error("StatCard render error:", error);
+            reportError(error);
+            return null;
+          }
+        }
+
+        function BreedDistribution({ data }) {
+          try {
+            return React.createElement(
+              "div",
+              {
+                className: "bg-white rounded-lg shadow-lg p-6",
+                "data-name": "breed-distribution",
+              },
+              React.createElement(
+                "h3",
+                { className: "text-xl font-bold mb-4" },
+                React.createElement("i", { className: "fas fa-dna mr-2" }),
+                "Breed Distribution"
+              ),
+              React.createElement(
+                "div",
+                { className: "space-y-4" },
+                data.map((breed, index) =>
+                  React.createElement(
+                    "div",
+                    { key: index },
+                    React.createElement(
+                      "div",
+                      { className: "flex justify-between mb-1" },
+                      React.createElement("span", null, breed.breed),
+                      React.createElement("span", null, `${breed.percentage}%`)
+                    ),
+                    React.createElement(
+                      "div",
+                      { className: "w-full bg-gray-200 rounded-full h-2" },
+                      React.createElement("div", {
+                        className: "bg-blue-600 rounded-full h-2",
+                        style: { width: `${breed.percentage}%` },
+                      })
+                    )
+                  )
+                )
+              )
+            );
+          } catch (error) {
+            console.error("BreedDistribution render error:", error);
+            reportError(error);
+            return null;
+          }
+        }
+
+        function GenderDistribution({ data }) {
+          try {
+            return React.createElement(
+              "div",
+              {
+                className: "bg-white rounded-lg shadow-lg p-6",
+                "data-name": "gender-distribution",
+              },
+              React.createElement(
+                "h3",
+                { className: "text-xl font-bold mb-4" },
+                React.createElement("i", {
+                  className: "fas fa-venus-mars mr-2",
+                }),
+                "Gender Distribution"
+              ),
+              React.createElement(
+                "div",
+                { className: "flex justify-around" },
+                data.map((item, index) =>
+                  React.createElement(
+                    "div",
+                    { key: index, className: "text-center" },
+                    React.createElement(
+                      "div",
+                      {
+                        className: `text-4xl mb-2 ${
+                          item.gender === "Male"
+                            ? "text-blue-500"
+                            : "text-pink-500"
+                        }`,
+                      },
+                      React.createElement("i", {
+                        className: `fas fa-${
+                          item.gender === "Male" ? "mars" : "venus"
+                        }`,
+                      })
+                    ),
+                    React.createElement(
+                      "div",
+                      { className: "text-2xl font-bold" },
+                      item.count
+                    ),
+                    React.createElement(
+                      "div",
+                      { className: "text-gray-500" },
+                      item.gender
+                    ),
+                    React.createElement(
+                      "div",
+                      { className: "text-sm text-gray-400" },
+                      `${item.percentage}%`
+                    )
+                  )
+                )
+              )
+            );
+          } catch (error) {
+            console.error("GenderDistribution render error:", error);
+            reportError(error);
+            return null;
+          }
+        }
+
+        function AgeDistribution({ data }) {
+          try {
+            return React.createElement(
+              "div",
+              {
+                className: "bg-white rounded-lg shadow-lg p-6",
+                "data-name": "age-distribution",
+              },
+              React.createElement(
+                "h3",
+                { className: "text-xl font-bold mb-4" },
+                React.createElement("i", {
+                  className: "fas fa-birthday-cake mr-2",
+                }),
+                "Age Distribution"
+              ),
+              React.createElement(
+                "div",
+                { className: "space-y-4" },
+                Object.entries(data).map(([range, count]) =>
+                  React.createElement(
+                    "div",
+                    { key: range },
+                    React.createElement(
+                      "div",
+                      { className: "flex justify-between mb-1" },
+                      React.createElement("span", null, `${range} years`),
+                      React.createElement("span", null, `${count} goats`)
+                    ),
+                    React.createElement(
+                      "div",
+                      { className: "w-full bg-gray-200 rounded-full h-2" },
+                      React.createElement("div", {
+                        className: "bg-green-500 rounded-full h-2",
+                        style: {
+                          width: `${
+                            (count / Math.max(...Object.values(data))) * 100
+                          }%`,
+                        },
+                      })
+                    )
+                  )
+                )
+              )
+            );
+          } catch (error) {
+            console.error("AgeDistribution render error:", error);
+            reportError(error);
+            return null;
+          }
+        }
+
+        // Main App Component
+        function App() {
+          const [data, setData] = React.useState(null);
+          const [loading, setLoading] = React.useState(true);
+          const [error, setError] = React.useState(null);
+
+          React.useEffect(() => {
+            const fetchData = async () => {
+              try {
+                const response = await fetch(
+                  "http://localhost:8000/api/goats/"
+                );
+                if (!response.ok) {
+                  throw new Error("Failed to fetch data");
+                }
+                const goats = await response.json();
+
+                // Process the data for the reports
+                const totalGoats = goats.length;
+                const averageAge =
+                  goats.reduce((sum, goat) => {
+                    const birthDate = new Date(goat.birth_date);
+                    const ageInYears =
+                      (new Date() - birthDate) / (1000 * 60 * 60 * 24 * 365);
+                    return sum + ageInYears;
+                  }, 0) / totalGoats;
+
+                const breedCounts = {};
+                const genderCounts = { male: 0, female: 0 }; // Use lowercase keys
+                const ageDistribution = {
+                  "0-1": 0,
+                  "1-3": 0,
+                  "3-5": 0,
+                  "5+": 0,
+                };
+
+                goats.forEach((goat) => {
+                  // Count breeds
+                  breedCounts[goat.breed] = (breedCounts[goat.breed] || 0) + 1;
+
+                  // Count genders (use lowercase keys)
+                  genderCounts[goat.gender.toLowerCase()] += 1;
+
+                  // Calculate age distribution
+                  const birthDate = new Date(goat.birth_date);
+                  const ageInYears =
+                    (new Date() - birthDate) / (1000 * 60 * 60 * 24 * 365);
+                  if (ageInYears <= 1) ageDistribution["0-1"] += 1;
+                  else if (ageInYears <= 3) ageDistribution["1-3"] += 1;
+                  else if (ageInYears <= 5) ageDistribution["3-5"] += 1;
+                  else ageDistribution["5+"] += 1;
+                });
+
+                // Convert breed counts to percentages
+                const breeds = Object.entries(breedCounts).map(
+                  ([breed, count]) => ({
+                    breed,
+                    count,
+                    percentage: ((count / totalGoats) * 100).toFixed(1),
+                  })
+                );
+
+                // Convert gender counts to percentages
+                const genders = Object.entries(genderCounts).map(
+                  ([gender, count]) => ({
+                    gender: gender.charAt(0).toUpperCase() + gender.slice(1), // Capitalize gender for display
+                    count,
+                    percentage: ((count / totalGoats) * 100).toFixed(1),
+                  })
+                );
+
+                // Set the processed data
+                setData({
+                  totalGoats,
+                  averageAge: averageAge.toFixed(1),
+                  breeds,
+                  genders,
+                  ageDistribution,
+                });
+
+                // Debugging: Log the genders array
+                console.log("Genders:", genders);
+              } catch (error) {
+                console.error("Error fetching data:", error);
+                setError("Failed to load data. Please try again later.");
+              } finally {
+                setLoading(false);
+              }
+            };
+
+            fetchData();
+          }, []);
+
+          if (loading) {
+            return React.createElement(
+              "div",
+              {
+                className:
+                  "min-h-screen bg-gray-100 flex items-center justify-center",
+              },
+              React.createElement("i", {
+                className: "fas fa-spinner fa-spin text-4xl text-blue-500",
+              })
+            );
+          }
+
+          if (error) {
+            return React.createElement(
+              "div",
+              {
+                className:
+                  "min-h-screen bg-gray-100 flex items-center justify-center",
+              },
+              React.createElement(
+                "div",
+                { className: "text-red-500 text-xl" },
+                error
+              )
+            );
+          }
+
+          if (!data) {
+            return null;
+          }
+
+          return React.createElement(
+            "div",
+            {
+              className: "min-h-screen bg-gray-100",
+              "data-name": "reports-page",
+            },
+            React.createElement(
+              "main",
+              { className: "container mx-auto px-4 py-8" },
+              React.createElement(
+                "div",
+                {
+                  className:
+                    "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8",
+                },
+                React.createElement(StatCard, {
+                  title: "Total Goats",
+                  value: data.totalGoats,
+                  icon: "goat",
+                  color: "blue",
+                }),
+                React.createElement(StatCard, {
+                  title: "Average Age",
+                  value: `${data.averageAge} years`,
+                  icon: "calendar",
+                  color: "green",
+                }),
+                React.createElement(StatCard, {
+                  title: "Males",
+                  value: data.genders.find((g) => g.gender === "Male").count,
+                  icon: "mars",
+                  color: "blue",
+                }),
+                React.createElement(StatCard, {
+                  title: "Females",
+                  value: data.genders.find((g) => g.gender === "Female").count,
+                  icon: "venus",
+                  color: "pink",
+                })
+              ),
+              React.createElement(
+                "div",
+                { className: "grid grid-cols-1 lg:grid-cols-2 gap-6" },
+                React.createElement(BreedDistribution, { data: data.breeds }),
+                React.createElement(GenderDistribution, { data: data.genders }),
+                React.createElement(AgeDistribution, {
+                  data: data.ageDistribution,
+                })
+              )
+            )
+          );
+        }
+
+        // Initialize React
+        const container = document.getElementById("root");
+        const root = ReactDOM.createRoot(container);
+        root.render(React.createElement(App));
+      }
+
+      // Start the application when DOM is ready
+      document.addEventListener("DOMContentLoaded", initializeApp);
+    </script>
+    {% endverbatim %}
+
+    <!-- Footer -->
+    <footer class="bg text-white py-4">
+      <div class="container text-center">
+        <p class="mb-0">&copy; 2025 Goat Pedigree. All rights reserved.</p>
+      </div>
+    </footer>
+  </body>
+</html>
