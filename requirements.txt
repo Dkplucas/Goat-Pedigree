@@ -76,6 +76,5 @@ types-python-dateutil==2.9.0.20241206
 typing_extensions==4.12.2
 urllib3==1.26.5
 uvicorn==0.34.0
-virtualenv==20.13.0+ds
 whitenoise==6.8.2
 zipp==1.0.0
