@@ -34,7 +34,7 @@ gunicorn==23.0.0
 h11==0.14.0
 httplib2==0.20.2
 hyperlink==21.0.0
-idna==3.3
+idna
 importlib-metadata==4.6.4
 Jinja2==3.0.3
 jsonpatch==1.32
