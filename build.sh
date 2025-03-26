@@ -2,7 +2,7 @@
 
 # Add these lines at the top
 pip install --upgrade pip setuptools wheel
-pip install PyYAML==5.4.1
+pip install PyYAML==6.0.1
 
 # Exit on error
 set -o errexit
