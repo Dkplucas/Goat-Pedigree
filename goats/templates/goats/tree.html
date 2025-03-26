@@ -430,7 +430,9 @@
       const apiService = {
         async getAllGoats() {
           try {
-            const response = await fetch("http://localhost:8000/api/goats/");
+            const response = await fetch(
+              "postgresql://goatpedigree_db_user:R8y5BW8yvTbI710q4Uye6CTYGVSsFWHk@dpg-cua44tlsvqrc73dm3580-a/goatpedigree_db"
+            );
             if (!response.ok) {
               throw new Error("Failed to fetch goats");
             }
