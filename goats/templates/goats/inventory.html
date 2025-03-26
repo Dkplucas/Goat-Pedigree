@@ -1,5 +1,4 @@
-{% load static %}
-{% load static tailwind_tags %}
+{% load static %} {% load static tailwind_tags %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -571,7 +570,9 @@
 
           const fetchGoats = async () => {
             try {
-              const response = await fetch("/api/goats/");
+              const response = await fetch(
+                "postgresql://goatpedigree_db_user:R8y5BW8yvTbI710q4Uye6CTYGVSsFWHk@dpg-cua44tlsvqrc73dm3580-a/goatpedigree_db"
+              );
               if (!response.ok) {
                 throw new Error("Failed to fetch goats");
               }
