@@ -1,0 +1,13 @@
+<!-- goats/templates/registration/logout.html -->
+{% extends 'goats/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="logout-container">
+    <div class="logout-box">
+        <h2>Logged Out</h2>
+        <p>You have been successfully logged out.</p>
+        <p><a href="{% url 'home' %}">Come back</a></p>
+    </div>
+</div>
+{% endblock %}
