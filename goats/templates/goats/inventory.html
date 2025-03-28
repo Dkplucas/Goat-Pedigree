@@ -289,6 +289,12 @@
 
     <!-- Precompiled JavaScript -->
     <script>
+      // Configuration for API endpoints
+      const isProduction = window.location.hostname.includes("render.com");
+      const API_BASE_URL = isProduction
+        ? "https://goatpedigree.onrender.com/api/goats/"
+        : "http://localhost:8000/api/goats/";
+
       // Error reporting function
       function reportError(error) {
         console.error("Application error:", error);
@@ -570,9 +576,7 @@
 
           const fetchGoats = async () => {
             try {
-              const response = await fetch(
-                "postgresql://goatpedigree_db_user:R8y5BW8yvTbI710q4Uye6CTYGVSsFWHk@dpg-cua44tlsvqrc73dm3580-a/goatpedigree_db"
-              );
+              const response = await fetch(`${API_BASE_URL}`);
               if (!response.ok) {
                 throw new Error("Failed to fetch goats");
               }

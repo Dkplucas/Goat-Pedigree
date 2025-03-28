@@ -31,7 +31,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = ['goat-pedigree.onrender.com']
+ALLOWED_HOSTS = ['https://goatpedigree.onrender.com']
 RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
 if RENDER_EXTERNAL_HOSTNAME:
     ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
@@ -74,15 +74,14 @@ MIDDLEWARE = [
 # Tailwind settings
 TAILWIND_APP_NAME = 'theme'
 INTERNAL_IPS = [
-    "localhost",
-    "goat-pedigree.onrender.com",
-    "127.0.0.1",
+    "localhost"
 ]
 
 # CORS settings
 CORS_ALLOW_ALL_ORIGINS = True  # Only for development
 CORS_ALLOW_CREDENTIALS = True
-CORS_ALLOWED_ORIGINS = ['https://goat-pedigree.onrender.com']
+CORS_ALLOWED_ORIGINS = ['http://localhost:8000',
+                        'https://goatpedigree.onrender.com',]
 
 # Security Headers
 SECURE_BROWSER_XSS_FILTER = True
@@ -189,11 +188,10 @@ EMAIL_HOST_USER = 'goatpedigree34@gmail.com'  # Replace with your email address
 EMAIL_HOST_PASSWORD = 'sgzd eomf dftj baoz'  # Replace with your email password
 
 # For production security
-if not DEBUG:
-    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-    SECURE_SSL_REDIRECT = True
-    SESSION_COOKIE_SECURE = True
-    CSRF_COOKIE_SECURE = True
+if DEBUG:
+    SECURE_SSL_REDIRECT = False
+    SESSION_COOKIE_SECURE = False
+    CSRF_COOKIE_SECURE = False
 
 
 # Additional security settings for production (commented out for development)
