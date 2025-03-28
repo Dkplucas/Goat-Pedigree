@@ -164,11 +164,18 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 # Static files loading for development
 STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 
-# Media files
+# Media files configuration
 MEDIA_URL = '/media/'
-MEDIA_ROOT = '/var/data/media'
+
+# For production on Render with persistent disk
 if not DEBUG:
     MEDIA_ROOT = '/var/data/media'
+else:
+    # Local development settings
+    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# Ensure the directory exists
+os.makedirs(MEDIA_ROOT, exist_ok=True)
 
 # Staticfiles finders
 STATICFILES_FINDERS = [

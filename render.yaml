@@ -15,3 +15,7 @@ services:
         value: "False"
       - key: WEB_CONCURRENCY
         value: "4"
+      - key: MEDIA_ROOT
+        value: /var/data/media
+      - key: MEDIA_URL
+        value: /media/
