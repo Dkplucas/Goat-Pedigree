@@ -1,0 +1,65 @@
+# Django
+*.log
+*.pot
+*.pyc
+__pycache__/
+db.sqlite3
+migrations/
+.env
+.env.local
+.DS_Store
+
+# Virtual environment
+venv/
+ENV/
+env/
+.venv/
+.env
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Static files
+/staticfiles/
+/media/
+
+# Node.js (if you have any frontend tools)
+node_modules/
+npm-debug.log*
+
+# Backup files
+*.bak
+*.tmp
+
+# Database
+*.db
+
+# macOS
+.DS_Store
+._*
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Python packaging
+*.egg-info/
+dist/
+build/
+*.manifest
+*.spec
+
+# Testing
+.coverage
+htmlcov/
+.pytest_cache/
+
+# Cloudinary (if using)
+cloudinary.yml
+
+# Render.com
+render.yaml

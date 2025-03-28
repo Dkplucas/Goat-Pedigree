@@ -16,6 +16,7 @@ import mimetypes
 import sys
 import dj_database_url
 from decouple import config
+from dotenv import load_dotenv
 
 # Add proper MIME types for JavaScript files
 mimetypes.add_type("application/javascript", ".js", True)
@@ -52,6 +53,8 @@ INSTALLED_APPS = [
     'theme',
     'django_browser_reload',
     'corsheaders',
+    'cloudinary',
+    'cloudinary_storage',
 ]
 
 # Admin Interface settings
@@ -165,13 +168,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 
 # Media files configuration
-MEDIA_URL = '/media/'
-# For production on Render with persistent disk
-if not DEBUG:
-    MEDIA_ROOT = os.path.join(BASE_DIR, 'var', 'data', 'media')
-else:
-    # Local development settings
-    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'  # Keep this for consistency
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 # Staticfiles finders
 STATICFILES_FINDERS = [
@@ -195,6 +193,18 @@ if DEBUG:
     SECURE_SSL_REDIRECT = False
     SESSION_COOKIE_SECURE = False
     CSRF_COOKIE_SECURE = False
+    
+# Cloudinary credentials (store these in environment variables!)
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': os.getenv('CLOUDINARY_CLOUD_NAME'),
+    'API_KEY': os.getenv('CLOUDINARY_API_KEY'),
+    'API_SECRET': os.getenv('CLOUDINARY_API_SECRET'),
+    'SECURE': True,  # Serve files over HTTPS
+    'EXCLUDE_DELETE_ORPHANED_MEDIA': True,  # Prevent accidental deletions
+    # Optimize image delivery
+    'STATIC_IMAGES_EXTENSIONS': ['jpg', 'jpeg', 'png', 'webp'],
+    'STATIC_VIDEOS_EXTENSIONS': ['mp4', 'mov'],
+}
 
 
 # Additional security settings for production (commented out for development)
