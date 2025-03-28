@@ -385,15 +385,6 @@
       // GoatCard Component
       function GoatCard({ goat }) {
         try {
-          // Function to construct the correct image URL
-          const getImageUrl = (imagePath) => {
-            if (!imagePath) return "{% static 'img/goat-placeholder.jpg' %}";
-            // Check if it's already a full URL
-            if (imagePath.startsWith("http")) return imagePath;
-            // For local paths, construct the correct URL
-            return `${API_BASE_URL.replace("/api/goats/", "")}${imagePath}`;
-          };
-
           return React.createElement(
             "div",
             {
@@ -404,12 +395,9 @@
               "div",
               { className: "relative" },
               React.createElement("img", {
-                src: getImageUrl(goat.image),
+                src: goat.image || "{% static 'img/goat-placeholder.jpg' %}",
                 alt: goat.name,
                 className: "w-full h-48 object-cover rounded-lg",
-                onError: (e) => {
-                  e.target.src = "{% static 'img/goat-placeholder.jpg' %}";
-                },
               }),
               React.createElement(
                 "span",
