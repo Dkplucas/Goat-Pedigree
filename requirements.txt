@@ -9,7 +9,6 @@ Brotli==1.1.0
 certifi==2020.6.20
 chardet==4.0.0
 click==8.0.3
-django-cloudinary-storage
 colorama==0.4.4
 cryptography==3.4.8
 diff-match-patch==20241021
@@ -80,5 +79,4 @@ uvicorn==0.34.0
 whitenoise==6.8.2
 zipp==1.0.0
 django-cloudinary-storage>=1.0
-pillow>=10.0
 python-dotenv>=1.0  # Optional but recommended
