@@ -78,5 +78,5 @@ urllib3==1.26.5
 uvicorn==0.34.0
 whitenoise==6.8.2
 zipp==1.0.0
-django-cloudinary-storage>=1.0
+django-cloudinary-storage
 python-dotenv>=1.0  # Optional but recommended
