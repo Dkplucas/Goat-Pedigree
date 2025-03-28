@@ -22,10 +22,6 @@ env/
 *.swp
 *.swo
 
-# Static files
-/staticfiles/
-/media/
-
 # Node.js (if you have any frontend tools)
 node_modules/
 npm-debug.log*
