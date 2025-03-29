@@ -119,20 +119,25 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'goat_project.wsgi.application'
 
-# Database
-DATABASE_URL = os.getenv('DATABASE_URL', '')
+# Database configuration
+DATABASE_URL = os.getenv('DATABASE_URL', config('DATABASE_URL', default=''))
 
-if DATABASE_URL:
-    DATABASES = {
-        'default': dj_database_url.parse(DATABASE_URL)
-    }
-else:
-    # Fallback for local development (e.g., SQLite)
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
-        }
+# Parse database configuration from $DATABASE_URL or fallback to SQLite
+DATABASES = {
+    'default': dj_database_url.config(
+        default=DATABASE_URL,
+        conn_max_age=600,  # Recommended for Render.com
+        conn_health_checks=True,  # Enable connection health checks
+        engine='django.db.backends.postgresql',  # Explicitly set PostgreSQL
+        ssl_require=not DEBUG  # Require SSL in production
+    )
+}
+
+# If no database URL is provided and we're using SQLite
+if not DATABASE_URL:
+    DATABASES['default'] = {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 
 # Password validation
@@ -174,7 +179,7 @@ STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 MEDIA_URL = '/media/'
 # For production on Render with persistent disk
 if not DEBUG:
-    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+    MEDIA_ROOT = 'media'
 else:
     # Local development settings
     MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
