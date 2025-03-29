@@ -81,8 +81,7 @@ MIDDLEWARE = [
 # Tailwind settings
 TAILWIND_APP_NAME = 'theme'
 INTERNAL_IPS = [
-    "localhost",
-    "goatpedigree.onrender.com"
+    "localhost"
 ]
 
 # CORS settings
@@ -173,10 +172,12 @@ if not DEBUG:
 
 # Media files configuration
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
-# Ensure this directory exists
-os.makedirs(MEDIA_ROOT, exist_ok=True)
+# For production on Render with persistent disk
+if not DEBUG:
+    MEDIA_ROOT =  os.path.join(BASE_DIR, 'media')
+else:
+    # Local development settings
+    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Staticfiles finders
 STATICFILES_FINDERS = [
@@ -204,5 +205,13 @@ if not DEBUG:
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+# Additional security settings for production (commented out for development)
+# CSRF_COOKIE_SECURE = True
+# SESSION_COOKIE_SECURE = True
+# SECURE_SSL_REDIRECT = True
+# SECURE_HSTS_SECONDS = 31536000
+# SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+# SECURE_HSTS_PRELOAD = True
 
 
