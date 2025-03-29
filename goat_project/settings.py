@@ -159,7 +159,6 @@ USE_I18N = True
 USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
-# Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
@@ -204,25 +203,4 @@ if DEBUG:
     SECURE_SSL_REDIRECT = False
     SESSION_COOKIE_SECURE = False
     CSRF_COOKIE_SECURE = False
-    
-# Cloudinary credentials (store these in environment variables!)
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': os.getenv('CLOUDINARY_CLOUD_NAME'),
-    'API_KEY': os.getenv('CLOUDINARY_API_KEY'),
-    'API_SECRET': os.getenv('CLOUDINARY_API_SECRET'),
-    'SECURE': True,  # Serve files over HTTPS
-    'EXCLUDE_DELETE_ORPHANED_MEDIA': True,  # Prevent accidental deletions
-    # Optimize image delivery
-    'STATIC_IMAGES_EXTENSIONS': ['jpg', 'jpeg', 'png', 'webp'],
-    'STATIC_VIDEOS_EXTENSIONS': ['mp4', 'mov'],
-}
-
-
-# Additional security settings for production (commented out for development)
-# CSRF_COOKIE_SECURE = True
-# SESSION_COOKIE_SECURE = True
-# SECURE_SSL_REDIRECT = True
-# SECURE_HSTS_SECONDS = 31536000
-# SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-# SECURE_HSTS_PRELOAD = True
 
