@@ -214,12 +214,26 @@ CLOUDINARY_STORAGE = {
     'STATIC_VIDEOS_EXTENSIONS': ['mp4', 'mov'],
 }
 
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'mail_admin': {
+            'level': 'ERROR',
+            'class': 'django.utils.log.AdminEmailHandler',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['mail_admin'],
+            'level': 'ERROR',
+            'propagate': True,
+           
+        },
+            
+    },
+},
+    
 
-# Additional security settings for production (commented out for development)
-# CSRF_COOKIE_SECURE = True
-# SESSION_COOKIE_SECURE = True
-# SECURE_SSL_REDIRECT = True
-# SECURE_HSTS_SECONDS = 31536000
-# SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-# SECURE_HSTS_PRELOAD = True
+
 
