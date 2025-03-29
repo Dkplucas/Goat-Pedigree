@@ -120,20 +120,13 @@ TEMPLATES = [
 WSGI_APPLICATION = 'goat_project.wsgi.application'
 
 # Database
-DATABASE_URL = os.getenv('DATABASE_URL', '')
-
-if DATABASE_URL:
-    DATABASES = {
-        'default': dj_database_url.parse(DATABASE_URL)
-    }
-else:
-    # Fallback for local development (e.g., SQLite)
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
-        }
-    }
+DATABASES = {
+    'default': dj_database_url.config(
+        default=config('DATABASE_URL', default='sqlite:///' + str(BASE_DIR / 'db.sqlite3')),
+        conn_max_age=600,
+        ssl_require=not DEBUG
+    )
+}
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
