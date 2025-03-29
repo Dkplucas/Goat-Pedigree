@@ -67,7 +67,7 @@ SILENCED_SYSTEM_CHECKS = ['security.W019']
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+    #'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',  # Must be before CommonMiddleware
     'django.middleware.common.CommonMiddleware',
@@ -130,11 +130,9 @@ DATABASE_URL = os.getenv('DATABASE_URL', config('DATABASE_URL', default=''))
 # Parse database configuration from $DATABASE_URL or fallback to SQLite
 DATABASES = {
     'default': dj_database_url.config(
-        default=DATABASE_URL,
-        conn_max_age=600,  # Recommended for Render.com
-        conn_health_checks=True,  # Enable connection health checks
-        engine='django.db.backends.postgresql',  # Explicitly set PostgreSQL
-        ssl_require=not DEBUG  # Require SSL in production
+        default=config('DATABASE_URL', default='sqlite:///' + str(BASE_DIR / 'db.sqlite3')),
+        conn_max_age=600,
+        ssl_require=not DEBUG
     )
 }
 
@@ -203,10 +201,13 @@ EMAIL_HOST_USER = 'goatpedigree34@gmail.com'  # Replace with your email address
 EMAIL_HOST_PASSWORD = 'sgzd eomf dftj baoz'  # Replace with your email password
 
 # For production security
-if DEBUG:
-    SECURE_SSL_REDIRECT = False
-    SESSION_COOKIE_SECURE = False
-    CSRF_COOKIE_SECURE = False
-
+if not DEBUG:
+    SECURE_HSTS_SECONDS = 31536000  # 1 year
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_PRELOAD = True
+    SECURE_SSL_REDIRECT = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 
