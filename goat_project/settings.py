@@ -16,6 +16,11 @@ import mimetypes
 import sys
 import dj_database_url
 from decouple import config
+import logging
+    
+# Check if running in a virtual environment
+logger = logging.getLogger('django.db.backends')
+logger.setLevel(logging.DEBUG)
 
 # Add proper MIME types for JavaScript files
 mimetypes.add_type("application/javascript", ".js", True)
