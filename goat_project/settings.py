@@ -30,9 +30,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: don't run with debug turned on in production!
 SECRET_KEY = config('SECRET_KEY')
-DEBUG = config('DEBUG', default=False, cast=bool)
+DEBUG = True
 
-ALLOWED_HOSTS = ['https://goatpedigree.onrender.com']
+ALLOWED_HOSTS = ['https://goatpedigree.onrender.com', 'localhost', '127.0.0.1']
 RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
 if RENDER_EXTERNAL_HOSTNAME:
     ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
@@ -77,7 +77,10 @@ MIDDLEWARE = [
 # Tailwind settings
 TAILWIND_APP_NAME = 'theme'
 INTERNAL_IPS = [
-    "localhost"
+    "localhost",
+    "127.0.0.1",
+    "goatpedigree.onrender.com",
+    
 ]
 
 # CORS settings
@@ -168,8 +171,13 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 
 # Media files configuration
-MEDIA_URL = '/media/'  # Keep this for consistency
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+MEDIA_URL = '/media/'
+# For production on Render with persistent disk
+if not DEBUG:
+    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+else:
+    # Local development settings
+    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Staticfiles finders
 STATICFILES_FINDERS = [
