@@ -195,6 +195,8 @@ EMAIL_PORT = 587  # Replace with your email provider's SMTP port
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'goatpedigree34@gmail.com'  # Replace with your email address
 EMAIL_HOST_PASSWORD = 'sgzd eomf dftj baoz'  # Replace with your email password
+ADMINS = [('Lucas', 'dossoukponganfleming@gmail.com')]
+SERVER_EMAIL = 'goatpedigree34@gmail.com'   # Email sender address
 
 # For production security
 if DEBUG:
@@ -217,22 +219,40 @@ CLOUDINARY_STORAGE = {
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '{levelname} {asctime} {module} {message}',
+            'style': '{',
+        },
+    },
     'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'verbose'
+        },
         'mail_admin': {
             'level': 'ERROR',
             'class': 'django.utils.log.AdminEmailHandler',
+            'formatter': 'verbose',
+            'include_html': True,
         },
     },
     'loggers': {
         'django': {
-            'handlers': ['mail_admin'],
-            'level': 'ERROR',
-            'propagate': True,
-           
+            'handlers': ['console', 'mail_admin'],
+            'level': 'INFO',
+            'propagate': False,
         },
-            
+        'goats': {  # Add your app-specific logger
+            'handlers': ['console'],
+            'level': 'DEBUG' if DEBUG else 'INFO',
+        },
     },
-},
+    'root': {
+        'handlers': ['console'],
+        'level': 'WARNING',
+    },
+}
     
 
 
