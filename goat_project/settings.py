@@ -76,7 +76,8 @@ MIDDLEWARE = [
 # Tailwind settings
 TAILWIND_APP_NAME = 'theme'
 INTERNAL_IPS = [
-    "localhost"
+    "localhost",
+    "goatpedigree.onrender.com"
 ]
 
 # CORS settings
@@ -173,7 +174,7 @@ STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 MEDIA_URL = '/media/'
 # For production on Render with persistent disk
 if not DEBUG:
-    MEDIA_ROOT = '/var/data/media'
+    MEDIA_ROOT = 'media'
 else:
     # Local development settings
     MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -201,13 +202,5 @@ if DEBUG:
     SESSION_COOKIE_SECURE = False
     CSRF_COOKIE_SECURE = False
 
-
-# Additional security settings for production (commented out for development)
-# CSRF_COOKIE_SECURE = True
-# SESSION_COOKIE_SECURE = True
-# SECURE_SSL_REDIRECT = True
-# SECURE_HSTS_SECONDS = 31536000
-# SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-# SECURE_HSTS_PRELOAD = True
 
 
