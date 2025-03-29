@@ -16,11 +16,7 @@ import mimetypes
 import sys
 import dj_database_url
 from decouple import config
-import logging
-    
-# Check if running in a virtual environment
-logger = logging.getLogger('django.db.backends')
-logger.setLevel(logging.DEBUG)
+from dotenv import load_dotenv
 
 # Add proper MIME types for JavaScript files
 mimetypes.add_type("application/javascript", ".js", True)
@@ -34,11 +30,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: don't run with debug turned on in production!
 SECRET_KEY = config('SECRET_KEY')
-DEBUG = config('DEBUG', default=False, cast=bool)
+DEBUG = True
 
-
-ALLOWED_HOSTS = ['goatpedigree.onrender.com']
-
+ALLOWED_HOSTS = ['https://goatpedigree.onrender.com', 'localhost', '127.0.0.1']
 RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
 if RENDER_EXTERNAL_HOSTNAME:
     ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
@@ -59,6 +53,8 @@ INSTALLED_APPS = [
     'theme',
     'django_browser_reload',
     'corsheaders',
+    'cloudinary',
+    'cloudinary_storage',
 ]
 
 # Admin Interface settings
@@ -67,11 +63,11 @@ SILENCED_SYSTEM_CHECKS = ['security.W019']
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',  # Must be before CommonMiddleware
     'django.middleware.common.CommonMiddleware',
     'django_browser_reload.middleware.BrowserReloadMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -81,17 +77,17 @@ MIDDLEWARE = [
 # Tailwind settings
 TAILWIND_APP_NAME = 'theme'
 INTERNAL_IPS = [
-    "localhost"
+    "localhost",
+    "127.0.0.1",
+    "goatpedigree.onrender.com",
+    
 ]
 
 # CORS settings
 CORS_ALLOW_ALL_ORIGINS = True  # Only for development
 CORS_ALLOW_CREDENTIALS = True
-CORS_ALLOWED_ORIGINS = [
-    "https://goatpedigree.onrender.com",
-    "http://localhost:8000",
-    "http://127.0.0.1:8000",
-]
+CORS_ALLOWED_ORIGINS = ['http://localhost:8000',
+                        'https://goatpedigree.onrender.com',]
 
 # Security Headers
 SECURE_BROWSER_XSS_FILTER = True
@@ -123,23 +119,20 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'goat_project.wsgi.application'
 
-# Database configuration
-DATABASE_URL = os.getenv('DATABASE_URL', config('DATABASE_URL', default=''))
+# Database
+DATABASE_URL = os.getenv('DATABASE_URL', '')
 
-# Parse database configuration from $DATABASE_URL or fallback to SQLite
-DATABASES = {
-    'default': dj_database_url.config(
-        default=config('DATABASE_URL', default='sqlite:///' + str(BASE_DIR / 'db.sqlite3')),
-        conn_max_age=600,
-        ssl_require=not DEBUG
-    )
-}
-
-# If no database URL is provided and we're using SQLite
-if not DATABASE_URL:
-    DATABASES['default'] = {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+if DATABASE_URL:
+    DATABASES = {
+        'default': dj_database_url.parse(DATABASE_URL)
+    }
+else:
+    # Fallback for local development (e.g., SQLite)
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
     }
 
 # Password validation
@@ -166,15 +159,22 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
 if not DEBUG:
     STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+# Static files loading for development
+STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 
 # Media files configuration
 MEDIA_URL = '/media/'
 # For production on Render with persistent disk
 if not DEBUG:
-    MEDIA_ROOT =  os.path.join(BASE_DIR, 'media')
+    MEDIA_ROOT = os.path.join(BASE_DIR, 'var', 'data', 'media')
 else:
     # Local development settings
     MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -197,14 +197,23 @@ EMAIL_HOST_USER = 'goatpedigree34@gmail.com'  # Replace with your email address
 EMAIL_HOST_PASSWORD = 'sgzd eomf dftj baoz'  # Replace with your email password
 
 # For production security
-if not DEBUG:
-    SECURE_HSTS_SECONDS = 31536000  # 1 year
-    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-    SECURE_HSTS_PRELOAD = True
-    SECURE_SSL_REDIRECT = True
-    SESSION_COOKIE_SECURE = True
-    CSRF_COOKIE_SECURE = True
-    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+if DEBUG:
+    SECURE_SSL_REDIRECT = False
+    SESSION_COOKIE_SECURE = False
+    CSRF_COOKIE_SECURE = False
+    
+# Cloudinary credentials (store these in environment variables!)
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': os.getenv('CLOUDINARY_CLOUD_NAME'),
+    'API_KEY': os.getenv('CLOUDINARY_API_KEY'),
+    'API_SECRET': os.getenv('CLOUDINARY_API_SECRET'),
+    'SECURE': True,  # Serve files over HTTPS
+    'EXCLUDE_DELETE_ORPHANED_MEDIA': True,  # Prevent accidental deletions
+    # Optimize image delivery
+    'STATIC_IMAGES_EXTENSIONS': ['jpg', 'jpeg', 'png', 'webp'],
+    'STATIC_VIDEOS_EXTENSIONS': ['mp4', 'mov'],
+}
+
 
 # Additional security settings for production (commented out for development)
 # CSRF_COOKIE_SECURE = True
@@ -213,5 +222,4 @@ if not DEBUG:
 # SECURE_HSTS_SECONDS = 31536000
 # SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 # SECURE_HSTS_PRELOAD = True
-
 
