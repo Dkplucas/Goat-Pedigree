@@ -170,19 +170,15 @@ STATICFILES_DIRS = [
 if not DEBUG:
     STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
-# Static files loading for development
-STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
+else:
+    STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 
 # Media files configuration
 MEDIA_URL = '/media/'
-# For production on Render with persistent disk
-if not DEBUG:
-    MEDIA_ROOT = 'media'
-else:
-    # Local development settings
-    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# Ensure this directory exists
+os.makedirs(MEDIA_ROOT, exist_ok=True)
 
 # Staticfiles finders
 STATICFILES_FINDERS = [
