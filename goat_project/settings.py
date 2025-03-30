@@ -30,7 +30,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: don't run with debug turned on in production!
 SECRET_KEY = config('SECRET_KEY')
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['https://goatpedigree.onrender.com', 'localhost', '127.0.0.1']
 RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
@@ -154,19 +154,18 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
-     # Add Font Awesome files directory
-    os.path.join(BASE_DIR, 'static', 'webfonts'),
+    
 ]
 if not DEBUG:
     STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-    STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
     
     # Add WhiteNoise configuration
     WHITENOISE_MANIFEST_STRICT = False
     WHITENOISE_USE_FINDERS = True
 else:
     STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # For development too
-    STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Media files configuration
 MEDIA_URL = '/media/'
