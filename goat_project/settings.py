@@ -201,18 +201,7 @@ if DEBUG:
     SESSION_COOKIE_SECURE = False
     CSRF_COOKIE_SECURE = False
     
-# Cloudinary credentials (store these in environment variables!)
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': os.getenv('CLOUDINARY_CLOUD_NAME'),
-    'API_KEY': os.getenv('CLOUDINARY_API_KEY'),
-    'API_SECRET': os.getenv('CLOUDINARY_API_SECRET'),
-    'SECURE': True,  # Serve files over HTTPS
-    'EXCLUDE_DELETE_ORPHANED_MEDIA': True,  # Prevent accidental deletions
-    # Optimize image delivery
-    'STATIC_IMAGES_EXTENSIONS': ['jpg', 'jpeg', 'png', 'webp'],
-    'STATIC_VIDEOS_EXTENSIONS': ['mp4', 'mov'],
-}
-
+# Error reporting settings
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
