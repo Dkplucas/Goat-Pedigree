@@ -167,6 +167,7 @@ if not DEBUG:
     WHITENOISE_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # Add this line
 else:
     STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
+    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Media files configuration
 MEDIA_URL = '/media/'
