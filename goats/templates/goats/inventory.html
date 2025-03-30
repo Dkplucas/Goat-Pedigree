@@ -327,6 +327,13 @@
         ? "https://goatpedigree.onrender.com/api/goats/"
         : "http://localhost:8000/api/goats/";
 
+      // Add this utility function at the beginning of your script
+      function getImageUrl(imagePath) {
+        if (!imagePath) return "/media/goats/goat-placeholder.jpg";
+        // Handle both full URLs and relative paths
+        return imagePath.startsWith("http") ? imagePath : `/${imagePath}`;
+      }
+
       // Error reporting function
       function reportError(error) {
         console.error("Application error:", error);
@@ -427,9 +434,13 @@
               "div",
               { className: "relative" },
               React.createElement("img", {
-                src: goat.image || "{% static 'img/goat-placeholder.jpg' %}",
+                src: getImageUrl(goat.image),
                 alt: goat.name,
                 className: "w-full h-48 object-cover rounded-lg",
+                onError: (e) => {
+                  e.target.onerror = null;
+                  e.target.src = "/media/goats/goat-placeholder.jpg";
+                }
               }),
               React.createElement(
                 "span",
@@ -495,11 +506,13 @@
                         "div",
                         { className: "flex items-center" },
                         React.createElement("img", {
-                          src:
-                            goat.father.image ||
-                            "{% static 'img/goat-placeholder.jpg' %}",
-                          alt: goat.father.name,
+                          src: getImageUrl(goat.father?.image),
+                          alt: goat.father?.name,
                           className: "w-6 h-6 rounded-full",
+                          onError: (e) => {
+                            e.target.onerror = null;
+                            e.target.src = "/media/goats/goat-placeholder.jpg";
+                          }
                         }),
                         React.createElement(
                           "span",
@@ -526,11 +539,13 @@
                         "div",
                         { className: "flex items-center" },
                         React.createElement("img", {
-                          src:
-                            goat.mother.image ||
-                            "{% static 'img/goat-placeholder.jpg' %}",
-                          alt: goat.mother.name,
+                          src: getImageUrl(goat.mother?.image),
+                          alt: goat.mother?.name,
                           className: "w-6 h-6 rounded-full",
+                          onError: (e) => {
+                            e.target.onerror = null;
+                            e.target.src = "/media/goats/goat-placeholder.jpg";
+                          }
                         }),
                         React.createElement(
                           "span",
@@ -566,11 +581,13 @@
                               "flex items-center bg-gray-100 rounded-full px-2 py-1",
                           },
                           React.createElement("img", {
-                            src:
-                              child.image ||
-                              "{% static 'img/goat-placeholder.jpg' %}",
+                            src: getImageUrl(child.image),
                             alt: child.name,
                             className: "w-4 h-4 rounded-full",
+                            onError: (e) => {
+                              e.target.onerror = null;
+                              e.target.src = "/media/goats/goat-placeholder.jpg";
+                            }
                           }),
                           React.createElement(
                             "span",
@@ -583,7 +600,6 @@
                   )
               )
             )
-            // Edit and delete buttons have been removed from here
           );
         } catch (error) {
           console.error("GoatCard component error:", error);
