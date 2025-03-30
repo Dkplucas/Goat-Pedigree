@@ -5,10 +5,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no"
-    />
-    <meta
       name="description"
       content="Goat Management System - Efficiently manage and track your goat herd"
     />
@@ -134,7 +130,10 @@
       }
 
       .nav-toggle {
-        display: none;
+        display: none; /* Base state - hidden on desktop */
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
       }
 
       .nav-toggle-label {
@@ -168,7 +167,7 @@
       /* Mobile Navigation - Updated */
       @media (max-width: 768px) {
         .nav-menu {
-          position: fixed; /* Changed from absolute to fixed */
+          position: absolute;
           top: 80px;
           left: 0;
           right: 0;
@@ -180,87 +179,91 @@
           transition: max-height 0.3s ease-out;
           padding: 0;
           margin: 0;
-          z-index: 998; /* Below toggle but above content */
+          transform: none; /* Remove the transform */
+          width: 100%; /* Add explicit width */
         }
 
         .nav-toggle {
-          display: none;
+          display: block; /* Show on mobile */
+          position: absolute;
+          right: 15px;
+          top: 50%;
+          transform: translateY(-50%);
+          opacity: 0;
+          width: 44px;
+          height: 44px;
+          margin: 0;
+          z-index: 1001;
         }
 
         .nav-toggle-label {
+          position: absolute;
+          right: 15px;
+          top: 50%;
+          transform: translateY(-50%);
           display: flex;
-          cursor: pointer;
-          height: 44px; /* Increased for better touch */
-          width: 44px; /* Increased for better touch */
-          margin-left: auto;
           align-items: center;
           justify-content: center;
-          z-index: 1000; /* Above everything */
+          width: 44px;
+          height: 44px;
+          z-index: 1000;
         }
 
         .nav-toggle-label span,
         .nav-toggle-label span::before,
         .nav-toggle-label span::after {
           display: block;
-          background-color: white;
-          position: absolute;
-          height: 3px;
-          width: 24px; /* Slightly smaller for better proportions */
-          border-radius: 2px;
-          transition: all 0.3s;
+          background: white;
+          height: 2px;
+          width: 24px;
+          position: relative;
+          transition: all 0.3s ease;
         }
 
-        .nav-toggle-label span {
-          top: 50%;
-          transform: translateY(-50%);
+        .nav-toggle-label span::before,
+        .nav-toggle-label span::after {
+          content: "";
+          position: absolute;
         }
 
         .nav-toggle-label span::before {
-          content: "";
-          top: -8px;
+          bottom: 8px;
         }
 
         .nav-toggle-label span::after {
-          content: "";
           top: 8px;
         }
 
-        .nav-toggle:checked ~ .nav-menu {
-          max-height: 100vh;
-          padding: 20px 0;
-        }
-
+        /* Animation for the hamburger menu */
         .nav-toggle:checked ~ .nav-toggle-label span {
           background: transparent;
         }
 
         .nav-toggle:checked ~ .nav-toggle-label span::before {
           transform: rotate(45deg);
-          top: 0;
+          bottom: 0;
         }
 
         .nav-toggle:checked ~ .nav-toggle-label span::after {
           transform: rotate(-45deg);
           top: 0;
         }
-
         .nav-item {
-          margin: 10px 0;
           width: 100%;
+          text-align: left;
+          margin: 10px 0;
         }
 
         .nav-link {
           display: block;
           padding: 12px 20px;
-          min-height: 44px; /* Apple recommended touch target */
-          box-sizing: border-box;
+          width: 100%;
         }
 
-        /* Prevent scrolling when menu is open */
-        body.menu-open {
-          overflow: hidden;
-          position: fixed;
-          width: 100%;
+        /* Show menu when checkbox is checked */
+        .nav-toggle:checked ~ .nav-menu {
+          max-height: 300px; /* Adjust this value based on your content */
+          padding: 20px 0;
         }
       }
     </style>
@@ -278,6 +281,7 @@
             />
             <span class="nav-logo-text">Goat Pedigree</span>
           </a>
+          <input type="checkbox" id="nav-toggle" class="nav-toggle" />
           <label for="nav-toggle" class="nav-toggle-label">
             <span></span>
           </label>
