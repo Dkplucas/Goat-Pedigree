@@ -5,6 +5,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no"
+    />
+    <meta
       name="description"
       content="Goat Management System - Efficiently manage and track your goat herd"
     />
@@ -137,82 +141,7 @@
         display: none;
       }
 
-      /* Mobile Navigation */
-      @media (max-width: 768px) {
-        .nav-menu {
-          position: absolute;
-          top: 75px;
-          left: 0;
-          transform: translateX(0);
-          background-color: #4caf50;
-          width: 100%;
-          flex-direction: column;
-          align-items: center;
-          max-height: 0;
-          overflow: hidden;
-          transition: max-height 0.3s ease-out;
-        }
-
-        .nav-toggle-label {
-          display: block;
-          cursor: pointer;
-          position: relative;
-          height: 24px;
-          width: 30px;
-          margin-left: auto; /* Push to right side on mobile */
-        }
-
-        .nav-toggle-label span,
-        .nav-toggle-label span::before,
-        .nav-toggle-label span::after {
-          display: block;
-          background-color: white;
-          position: absolute;
-          height: 3px;
-          width: 100%;
-          border-radius: 2px;
-          transition: all 0.3s;
-        }
-
-        .nav-toggle-label span {
-          top: 10px;
-        }
-
-        .nav-toggle-label span::before {
-          content: "";
-          top: -8px;
-        }
-
-        .nav-toggle-label span::after {
-          content: "";
-          top: 8px;
-        }
-
-        .nav-item {
-          margin: 15px 0;
-          width: 100%;
-          text-align: center;
-        }
-
-        .nav-toggle:checked ~ .nav-menu {
-          max-height: 300px;
-        }
-
-        .nav-toggle:checked ~ .nav-toggle-label span {
-          background: transparent;
-        }
-
-        .nav-toggle:checked ~ .nav-toggle-label span::before {
-          transform: rotate(45deg);
-          top: 0;
-        }
-
-        .nav-toggle:checked ~ .nav-toggle-label span::after {
-          transform: rotate(-45deg);
-          top: 0;
-        }
-      }
-
+      //body and footer styles
       body {
         background-color: #f3f4f6;
       }
@@ -234,6 +163,105 @@
 
       .goat-card:hover {
         transform: translateY(-4px);
+      }
+
+      /* Mobile Navigation - Updated */
+      @media (max-width: 768px) {
+        .nav-menu {
+          position: fixed; /* Changed from absolute to fixed */
+          top: 80px;
+          left: 0;
+          right: 0;
+          background-color: #4caf50;
+          flex-direction: column;
+          align-items: center;
+          max-height: 0;
+          overflow: hidden;
+          transition: max-height 0.3s ease-out;
+          padding: 0;
+          margin: 0;
+          z-index: 998; /* Below toggle but above content */
+        }
+
+        .nav-toggle {
+          display: none;
+        }
+
+        .nav-toggle-label {
+          display: flex;
+          cursor: pointer;
+          height: 44px; /* Increased for better touch */
+          width: 44px; /* Increased for better touch */
+          margin-left: auto;
+          align-items: center;
+          justify-content: center;
+          z-index: 1000; /* Above everything */
+        }
+
+        .nav-toggle-label span,
+        .nav-toggle-label span::before,
+        .nav-toggle-label span::after {
+          display: block;
+          background-color: white;
+          position: absolute;
+          height: 3px;
+          width: 24px; /* Slightly smaller for better proportions */
+          border-radius: 2px;
+          transition: all 0.3s;
+        }
+
+        .nav-toggle-label span {
+          top: 50%;
+          transform: translateY(-50%);
+        }
+
+        .nav-toggle-label span::before {
+          content: "";
+          top: -8px;
+        }
+
+        .nav-toggle-label span::after {
+          content: "";
+          top: 8px;
+        }
+
+        .nav-toggle:checked ~ .nav-menu {
+          max-height: 100vh;
+          padding: 20px 0;
+        }
+
+        .nav-toggle:checked ~ .nav-toggle-label span {
+          background: transparent;
+        }
+
+        .nav-toggle:checked ~ .nav-toggle-label span::before {
+          transform: rotate(45deg);
+          top: 0;
+        }
+
+        .nav-toggle:checked ~ .nav-toggle-label span::after {
+          transform: rotate(-45deg);
+          top: 0;
+        }
+
+        .nav-item {
+          margin: 10px 0;
+          width: 100%;
+        }
+
+        .nav-link {
+          display: block;
+          padding: 12px 20px;
+          min-height: 44px; /* Apple recommended touch target */
+          box-sizing: border-box;
+        }
+
+        /* Prevent scrolling when menu is open */
+        body.menu-open {
+          overflow: hidden;
+          position: fixed;
+          width: 100%;
+        }
       }
     </style>
   </head>
@@ -804,6 +832,39 @@
       ReactDOM.createRoot(document.getElementById("root")).render(
         React.createElement(App, null)
       );
+    </script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const navToggle = document.getElementById("nav-toggle");
+        const body = document.body;
+
+        // Toggle body class when menu is opened/closed
+        navToggle.addEventListener("change", function () {
+          if (this.checked) {
+            body.classList.add("menu-open");
+          } else {
+            body.classList.remove("menu-open");
+          }
+        });
+
+        // Close menu when clicking on a link (for SPA-like behavior)
+        document.querySelectorAll(".nav-link").forEach((link) => {
+          link.addEventListener("click", function () {
+            if (window.innerWidth <= 768) {
+              navToggle.checked = false;
+              body.classList.remove("menu-open");
+            }
+          });
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener("click", function (e) {
+          if (!e.target.closest(".nav-container") && navToggle.checked) {
+            navToggle.checked = false;
+            body.classList.remove("menu-open");
+          }
+        });
+      });
     </script>
   </body>
 </html>
