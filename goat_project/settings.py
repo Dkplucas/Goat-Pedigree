@@ -159,12 +159,8 @@ STATICFILES_DIRS = [
 # For production
 if not DEBUG:
     STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-    
-    # Add these WhiteNoise configurations
-    WHITENOISE_MANIFEST_STRICT = False
-    WHITENOISE_USE_FINDERS = True
-    WHITENOISE_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # Add this line
+
+    STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 else:
     STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
     STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
