@@ -86,7 +86,8 @@ INTERNAL_IPS = [
 CORS_ALLOW_ALL_ORIGINS = True  # Only for development
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = ['http://localhost:8000',
-                        '64.226.88.215',]
+                        "http://64.226.88.215",  
+                        "https://64.226.88.215",]
 
 # Security Headers
 SECURE_BROWSER_XSS_FILTER = True
