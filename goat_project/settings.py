@@ -31,7 +31,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['64.226.88.215', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['64.226.88.215', 'localhost', '127.0.0.1', 'goatpedigree.pro']
 RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
 if RENDER_EXTERNAL_HOSTNAME:
     ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
@@ -78,6 +78,7 @@ INTERNAL_IPS = [
     "localhost",
     "127.0.0.1",
     "64.226.88.215",
+    "goatpedigree.pro",
     
 ]
 
@@ -86,7 +87,10 @@ CORS_ALLOW_ALL_ORIGINS = True  # Only for development
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = ['http://localhost:8000',
                         "http://64.226.88.215",  
-                        "https://64.226.88.215",]
+                        "https://64.226.88.215",
+                        "http://goatpedigree.pro",
+                        "https://goatpedigree.pro",
+                        ]
 
 # Security Headers
 SECURE_BROWSER_XSS_FILTER = True
