@@ -29,10 +29,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: don't run with debug turned on in production!
-SECRET_KEY = config('SECRET_KEY')
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['https://goatpedigree.onrender.com', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['64.226.88.215', 'localhost', '127.0.0.1']
 RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
 if RENDER_EXTERNAL_HOSTNAME:
     ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
@@ -79,7 +78,7 @@ TAILWIND_APP_NAME = 'theme'
 INTERNAL_IPS = [
     "localhost",
     "127.0.0.1",
-    "goatpedigree.onrender.com",
+    "64.226.88.215",
     
 ]
 
@@ -87,7 +86,7 @@ INTERNAL_IPS = [
 CORS_ALLOW_ALL_ORIGINS = True  # Only for development
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = ['http://localhost:8000',
-                        'https://goatpedigree.onrender.com',]
+                        '64.226.88.215',]
 
 # Security Headers
 SECURE_BROWSER_XSS_FILTER = True
@@ -121,11 +120,14 @@ WSGI_APPLICATION = 'goat_project.wsgi.application'
 
 # Database
 DATABASES = {
-    'default': dj_database_url.config(
-        default=config('DATABASE_URL'),
-        conn_max_age=600,
-        ssl_require=not DEBUG  # Only enable SSL for PostgreSQL in production
-    )
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'goatpedigree',
+        'USER': 'lucas',
+        'PASSWORD': '123456789',
+        'HOST': 'localhost',
+        'PORT': '',
+    }
 }
 
 # Password validation
@@ -152,27 +154,9 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
-]
-
-# For production
-if not DEBUG:
-    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
-    STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
-else:
-    STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
-    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
-# Media files configuration
+STATIC_ROOT = '/home/django/Goat-Pedigree/staticfiles'
 MEDIA_URL = '/media/'
-# For production on Render with persistent disk
-if not DEBUG:
-    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-else:
-    # Local development settings
-    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = '/home/django/Goat-Pedigree/media'
 
 # Staticfiles finders
 STATICFILES_FINDERS = [
