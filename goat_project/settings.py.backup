@@ -169,16 +169,11 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 
-# Static files configuration
+# Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
-]
-
-# Media files configuration
+STATIC_ROOT = '/home/django/Goat-Pedigree/staticfiles'
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = '/home/django/Goat-Pedigree/media'
 
 # Staticfiles finders
 STATICFILES_FINDERS = [
@@ -199,12 +194,12 @@ EMAIL_HOST_PASSWORD = 'sgzd eomf dftj baoz'  # Replace with your email password
 ADMINS = [('Lucas', 'dossoukponganfleming@gmail.com')]
 SERVER_EMAIL = 'goatpedigree34@gmail.com'   # Email sender address
 
-# CSRF & Security
-CSRF_TRUSTED_ORIGINS = ['https://goatpedigree.pro', 'https://www.goatpedigree.pro']
-SECURE_SSL_REDIRECT = True
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
-
+# For production security
+if DEBUG:
+    SECURE_SSL_REDIRECT = False
+    SESSION_COOKIE_SECURE = False
+    CSRF_COOKIE_SECURE = False
+    
 # Error reporting settings
 LOGGING = {
     'version': 1,
