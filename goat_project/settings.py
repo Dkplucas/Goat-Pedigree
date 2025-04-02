@@ -22,6 +22,9 @@ from dotenv import load_dotenv
 mimetypes.add_type("application/javascript", ".js", True)
 mimetypes.add_type("text/javascript", ".js", True)
 
+# Load environment variables from .env file
+load_dotenv()
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -30,10 +33,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # Option 2: Environment variable with fallback
-SECRET_KEY = os.environ.get('SECRET_KEY', '')
-if not SECRET_KEY:
-    raise ValueError("SECRET_KEY must be set in environment")
 DEBUG = False
+SECRET_KEY = os.getenv('SECRET_KEY')
+if not SECRET_KEY and not DEBUG:
+    raise ValueError("SECRET_KEY must be set in environment for production")
+
 
 ALLOWED_HOSTS = ['goatpedigree.pro', 'www.goatpedigree.pro', '64.226.88.215', 'localhost', '127.0.0.1']
 RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
@@ -131,13 +135,17 @@ WSGI_APPLICATION = 'goat_project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'goatpedigree',
-        'USER': 'lucas',
-        'PASSWORD': '123456789',
-        'HOST': 'localhost',
-        'PORT': '',
+        'NAME': os.getenv('DB_NAME', 'goatpedigree'),
+        'USER': os.getenv('DB_USER', 'lucas'),
+        'PASSWORD': os.getenv('DB_PASSWORD', '123456789'),
+        'HOST': os.getenv('DB_HOST', 'localhost'),
+        'PORT': os.getenv('DB_PORT', '5432'),
     }
 }
+# For production, use DATABASE_URL if available
+if not DEBUG:
+    db_from_env = dj_database_url.config(conn_max_age=600)
+    DATABASES['default'].update(db_from_env)
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
