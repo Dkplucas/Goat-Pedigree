@@ -29,7 +29,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: don't run with debug turned on in production!
-SECRET_KEY = '9865d1d784fa44d2842387412a05e103' 
+# Option 2: Environment variable with fallback
+SECRET_KEY = os.environ.get('SECRET_KEY', '')
+if not SECRET_KEY:
+    raise ValueError("SECRET_KEY must be set in environment")
 DEBUG = False
 
 ALLOWED_HOSTS = ['goatpedigree.pro', 'www.goatpedigree.pro', '64.226.88.215', 'localhost', '127.0.0.1']
