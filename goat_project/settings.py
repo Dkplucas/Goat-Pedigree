@@ -135,8 +135,8 @@ WSGI_APPLICATION = 'goat_project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'goatpedigree',
-        'USER': 'lucas',
+        'NAME': 'goatpedigreedb',
+        'USER': 'luco',
         'PASSWORD': '123456789',
         'HOST': 'localhost',
         'PORT': '',
