@@ -132,16 +132,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'goat_project.wsgi.application'
 
 # Database
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'goatpedigreedb',
-        'USER': 'luco',
-        'PASSWORD': '123456789',
-        'HOST': 'localhost',
-        'PORT': '',
-    }
-}
+DATABASES = {'default': dj_database_url.config()}
 # For production, use DATABASE_URL if available
 if not DEBUG:
     db_from_env = dj_database_url.config(conn_max_age=600)
