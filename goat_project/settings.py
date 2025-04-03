@@ -34,12 +34,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: don't run with debug turned on in production!
 # Option 2: Environment variable with fallback
 DEBUG = os.getenv('DEBUG', 'False') == 'True'
-SECRET_KEY = os.getenv('SECRET_KEY')
+SECRET_KEY = '9865d1d784fa44d2842387412a05e103'
 if not SECRET_KEY and not DEBUG:
     raise ValueError("SECRET_KEY must be set in environment for production")
 
 
-ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '').split(',')
+ALLOWED_HOSTS = ['.goatpedigree.pro','goatpedigree.pro','www.goatpedigree.pro', 'localhost', '127.0.0.1'] 
 RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
 if RENDER_EXTERNAL_HOSTNAME:
     ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
@@ -134,12 +134,12 @@ WSGI_APPLICATION = 'goat_project.wsgi.application'
 # Database
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('DB_NAME', 'goatpedigree'),
-        'USER': os.getenv('DB_USER', 'lucas'),
-        'PASSWORD': os.getenv('DB_PASSWORD', '123456789'),
-        'HOST': os.getenv('DB_HOST', 'localhost'),
-        'PORT': os.getenv('DB_PORT', '5432'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'goatpedigree',
+        'USER': 'lucas',
+        'PASSWORD': '123456789',
+        'HOST': 'localhost',
+        'PORT': '',
     }
 }
 # For production, use DATABASE_URL if available
