@@ -44,7 +44,6 @@ urlpatterns = [
     path('login/', views.user_login, name='login'),
     path('logout/', CustomLogoutView.as_view(), name='logout'),
     path('', include('goats.urls')),  # Include your app's URLs
-    path('__reload__/', include('django_browser_reload.urls')),  # Add this line
     path('404-test/', TemplateView.as_view(template_name='404.html')),
     
 ]
