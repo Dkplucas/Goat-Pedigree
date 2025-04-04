@@ -39,7 +39,7 @@ if not SECRET_KEY and not DEBUG:
     raise ValueError("SECRET_KEY must be set in environment for production")
 
 
-ALLOWED_HOSTS = ['.goatpedigree.pro','goatpedigree.pro','www.goatpedigree.pro', 'localhost', '127.0.0.1', '64.226.88.215'] 
+ALLOWED_HOSTS = ['.goatpedigree.pro','goatpedigree.pro','www.goatpedigree.pro', 'localhost', '127.0.0.1', '64.226.88.215:8000'] 
 RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
 if RENDER_EXTERNAL_HOSTNAME:
     ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
@@ -94,8 +94,8 @@ INTERNAL_IPS = [
 CORS_ALLOW_ALL_ORIGINS = True  # Only for development
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = ['http://localhost:8000',
-                        "http://64.226.88.215",  
-                        "https://64.226.88.215",
+                        "http://64.226.88.215:8000",  
+                        "https://64.226.88.215:8000",
                         "http://goatpedigree.pro",
                         "https://goatpedigree.pro",
                         ]
@@ -199,10 +199,11 @@ ADMINS = [('Lucas', 'dossoukponganfleming@gmail.com')]
 SERVER_EMAIL = 'goatpedigree34@gmail.com'   # Email sender address
 
 # CSRF & Security
-CSRF_TRUSTED_ORIGINS = ['https://goatpedigree.pro', 'https://www.goatpedigree.pro']
-SECURE_SSL_REDIRECT = True
+CSRF_TRUSTED_ORIGINS = ['https://goatpedigree.pro', 'https://www.goatpedigree.pro', 'http://localhost:8000', 'http://127.0.0.1:8000', 'http://64.226.88.215:8000']
+CSRF_COOKIE_SECURE = True  # Use secure cookies for CSRF protection
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Error reporting settings
 LOGGING = {
