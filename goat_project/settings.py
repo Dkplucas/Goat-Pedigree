@@ -132,11 +132,16 @@ TEMPLATES = [
 WSGI_APPLICATION = 'goat_project.wsgi.application'
 
 # Database
-DATABASES = {'default': dj_database_url.config()}
-# For production, use DATABASE_URL if available
-if not DEBUG:
-    db_from_env = dj_database_url.config(conn_max_age=600)
-    DATABASES['default'].update(db_from_env)
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'goatpedigree',
+        'USER': 'lucas',
+        'PASSWORD': '123456789',  # Replace with actual password
+        'HOST': 'localhost',
+        'PORT': '5432',
+    }
+}
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
