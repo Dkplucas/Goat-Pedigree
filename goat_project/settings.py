@@ -59,8 +59,6 @@ INSTALLED_APPS = [
     'tailwind',
     'theme',
     'corsheaders',
-    'cloudinary',
-    'cloudinary_storage',
 ]
 
 # Admin Interface settings
@@ -72,7 +70,7 @@ MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',  # Must be before CommonMiddleware
     'django.middleware.common.CommonMiddleware',
-    'django_browser_reload.middleware.BrowserReloadMiddleware',
+    'django.middleware.locale.LocaleMiddleware', 
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
