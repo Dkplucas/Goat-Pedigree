@@ -58,7 +58,7 @@ INSTALLED_APPS = [
     'goats',
     'tailwind',
     'theme',
-    'django_browser_reload',
+    #'django_browser_reload',
     'corsheaders',
     'cloudinary',
     'cloudinary_storage',
