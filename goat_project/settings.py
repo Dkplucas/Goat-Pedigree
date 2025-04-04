@@ -99,7 +99,10 @@ CORS_ALLOWED_ORIGINS = ['http://localhost:8000',
                         "http://goatpedigree.pro",
                         "https://goatpedigree.pro",
                         ]
-CSRF_TRUSTED_ORIGINS = ['https://goatpedigree.pro', 'https://www.goatpedigree.pro']
+CSRF_TRUSTED_ORIGINS = ['https://goatpedigree.pro', 
+                        'https://www.goatpedigree.pro',
+                        'http://64.226.88.215:9000']
+
 
 # Security Headers
 SECURE_BROWSER_XSS_FILTER = True
