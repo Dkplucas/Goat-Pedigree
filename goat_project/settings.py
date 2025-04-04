@@ -93,9 +93,9 @@ INTERNAL_IPS = [
 # CORS settings
 CORS_ALLOW_ALL_ORIGINS = True  # Only for development
 CORS_ALLOW_CREDENTIALS = True
-CORS_ALLOWED_ORIGINS = ['http://localhost:8000',
-                        "http://64.226.88.215:8000",  
-                        "https://64.226.88.215:8000",
+CORS_ALLOWED_ORIGINS = ['http://localhost:9000',
+                        "http://64.226.88.215:9000",  
+                        "https://64.226.88.215:9000",
                         "http://goatpedigree.pro",
                         "https://goatpedigree.pro",
                         ]
@@ -204,9 +204,11 @@ SERVER_EMAIL = 'goatpedigree34@gmail.com'   # Email sender address
 # CSRF & Security
 CSRF_TRUSTED_ORIGINS = ['https://goatpedigree.pro', 'https://www.goatpedigree.pro', 'http://localhost:8000', 'http://127.0.0.1:8000', 'http://64.226.88.215:8000']
 CSRF_COOKIE_SECURE = True  # Use secure cookies for CSRF protection
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+CSRF_USE_SESSIONS = False
+CSRF_COOKIE_HTTPONLY = False 
+CSRF_COOKIE_SECURE = False  
+SESSION_COOKIE_SECURE = False 
 
 # Error reporting settings
 LOGGING = {
