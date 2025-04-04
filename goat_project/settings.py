@@ -39,7 +39,7 @@ if not SECRET_KEY and not DEBUG:
     raise ValueError("SECRET_KEY must be set in environment for production")
 
 
-ALLOWED_HOSTS = ['.goatpedigree.pro','goatpedigree.pro','www.goatpedigree.pro', 'localhost', '127.0.0.1', '64.226.88.215:8000'] 
+ALLOWED_HOSTS = ['*'] 
 RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
 if RENDER_EXTERNAL_HOSTNAME:
     ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
