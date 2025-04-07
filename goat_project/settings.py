@@ -33,7 +33,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # Option 2: Environment variable with fallback
-DEBUG = True
+DEBUG = False
 SECRET_KEY = '9865d1d784fa44d2842387412a05e103'
 if not SECRET_KEY and not DEBUG:
     raise ValueError("SECRET_KEY must be set in environment for production")
@@ -170,7 +170,7 @@ USE_TZ = True
 
 # Static files configuration
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = '/home/lucas/Goat-Pedigree/staticfiles'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
