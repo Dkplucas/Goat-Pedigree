@@ -177,7 +177,11 @@ STATICFILES_DIRS = [
 
 # Media files configuration
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'home/lucas/Goat-Pedigree/media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# For production, add this to prevent temporary file paths
+FILE_UPLOAD_PERMISSIONS = 0o644
+FILE_UPLOAD_DIRECTORY_PERMISSIONS = 0o755
 
 # Staticfiles finders
 STATICFILES_FINDERS = [
