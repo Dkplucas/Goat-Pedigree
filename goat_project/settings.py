@@ -44,7 +44,7 @@ ALLOWED_HOSTS = [
     'www.goatpedigree.pro',      # www subdomain
     '64.226.88.215',             # Your droplet's IP (temporary)
     'localhost',                 # For local management
-    '127.0.0.1'                 # For local services
+    '127.0.0.1',                 # For local services
 ]
 RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
 if RENDER_EXTERNAL_HOSTNAME:
