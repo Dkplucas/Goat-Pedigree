@@ -33,7 +33,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # Option 2: Environment variable with fallback
-DEBUG = False
+DEBUG = True
 SECRET_KEY = '9865d1d784fa44d2842387412a05e103'
 if not SECRET_KEY and not DEBUG:
     raise ValueError("SECRET_KEY must be set in environment for production")
