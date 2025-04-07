@@ -322,10 +322,10 @@
     <!-- Precompiled JavaScript -->
     <script>
       // Configuration for API endpoints
-      const isProduction = window.location.hostname.includes("render.com");
-      const API_BASE_URL = isProduction
-        ? "https://goatpedigree.pro/api/goats/"
-        : "http://localhost:8000/api/goats/";
+      const API_BASE_URL =
+        window.location.hostname === "goatpedigree.pro"
+          ? "https://goatpedigree.pro/api/goats/"
+          : "http://localhost:8000/api/goats/";
 
       // Add this utility function at the beginning of your script
       function getImageUrl(imagePath) {
