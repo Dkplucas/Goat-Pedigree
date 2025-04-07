@@ -324,7 +324,7 @@
       // Configuration for API endpoints
       const isProduction = window.location.hostname.includes("render.com");
       const API_BASE_URL = isProduction
-        ? "https://goatpedigree.onrender.com/api/goats/"
+        ? "https://goatpedigree.pro/api/goats/"
         : "http://localhost:8000/api/goats/";
 
       // Add this utility function at the beginning of your script
@@ -440,7 +440,7 @@
                 onError: (e) => {
                   e.target.onerror = null;
                   e.target.src = "/media/goats/goat-placeholder.jpg";
-                }
+                },
               }),
               React.createElement(
                 "span",
@@ -512,7 +512,7 @@
                           onError: (e) => {
                             e.target.onerror = null;
                             e.target.src = "/media/goats/goat-placeholder.jpg";
-                          }
+                          },
                         }),
                         React.createElement(
                           "span",
@@ -545,7 +545,7 @@
                           onError: (e) => {
                             e.target.onerror = null;
                             e.target.src = "/media/goats/goat-placeholder.jpg";
-                          }
+                          },
                         }),
                         React.createElement(
                           "span",
@@ -586,8 +586,9 @@
                             className: "w-4 h-4 rounded-full",
                             onError: (e) => {
                               e.target.onerror = null;
-                              e.target.src = "/media/goats/goat-placeholder.jpg";
-                            }
+                              e.target.src =
+                                "/media/goats/goat-placeholder.jpg";
+                            },
                           }),
                           React.createElement(
                             "span",
