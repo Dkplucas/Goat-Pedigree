@@ -33,13 +33,19 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # Option 2: Environment variable with fallback
-DEBUG = True
+DEBUG = False
 SECRET_KEY = '9865d1d784fa44d2842387412a05e103'
 if not SECRET_KEY and not DEBUG:
     raise ValueError("SECRET_KEY must be set in environment for production")
 
-
-ALLOWED_HOSTS = ['*'] 
+# settings.py (Production)
+ALLOWED_HOSTS = [
+    'goatpedigree.pro',          # Primary domain
+    'www.goatpedigree.pro',      # www subdomain
+    '64.226.88.215',             # Your droplet's IP (temporary)
+    'localhost',                 # For local management
+    '127.0.0.1'                 # For local services
+]
 RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
 if RENDER_EXTERNAL_HOSTNAME:
     ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
