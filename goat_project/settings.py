@@ -191,11 +191,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Email settings
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'  # Replace with your email provider's SMTP server
-EMAIL_PORT = 587  # Replace with your email provider's SMTP port
+EMAIL_PORT = 587  
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'goatpedigree34@gmail.com'  # Replace with your email address
 EMAIL_HOST_PASSWORD = 'sgzd eomf dftj baoz'  # Replace with your email password
-ADMINS = [('Lucas', 'dossoukponganfleming@gmail.com')]
+ADMINS = []
 SERVER_EMAIL = 'goatpedigree34@gmail.com'   # Email sender address
 
 # CSRF & Security
