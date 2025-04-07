@@ -101,6 +101,7 @@ CORS_ALLOWED_ORIGINS = ['http://localhost:9000',
                         "https://64.226.88.215:9000",
                         "http://goatpedigree.pro",
                         "https://goatpedigree.pro",
+                        "https://www.goatpedigree.pro",
                         ]
 CSRF_TRUSTED_ORIGINS = ['https://goatpedigree.pro', 
                         'https://www.goatpedigree.pro',
