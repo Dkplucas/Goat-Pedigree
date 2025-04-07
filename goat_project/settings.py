@@ -40,12 +40,12 @@ if not SECRET_KEY and not DEBUG:
 
 # settings.py (Production)
 ALLOWED_HOSTS = [
-    'goatpedigree.pro',          # Primary domain
-    'www.goatpedigree.pro',      # www subdomain
-    '64.226.88.215',             # Your droplet's IP (temporary)
-    'localhost',                 # For local management
-    '127.0.0.1',                 # For local services
+    'goatpedigree.pro',
+    'www.goatpedigree.pro',
+    'localhost',
+    '127.0.0.1',
 ]
+
 RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
 if RENDER_EXTERNAL_HOSTNAME:
     ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
