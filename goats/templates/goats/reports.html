@@ -335,10 +335,8 @@
     {% verbatim %}
     <script>
       // Configuration for API endpoints
-      const isProduction = window.location.hostname.includes("render.com");
-      const API_BASE_URL = isProduction
-        ? "https://goatpedigree.onrender.com/api/goats/"
-        : "http://localhost:8000/api/goats/";
+      const API_BASE_URL = window.location.origin + "/api/goats/";
+
       function initializeApp() {
         // Components
         function StatCard({ title, value, icon, color }) {
@@ -554,9 +552,14 @@
               try {
                 const response = await fetch(`${API_BASE_URL}`);
                 if (!response.ok) {
-                  throw new Error("Failed to fetch data");
+                  throw new Error(`HTTP error! status: ${response.status}`);
                 }
                 const goats = await response.json();
+
+                // Add null checks and fallbacks
+                if (!goats || !Array.isArray(goats)) {
+                  throw new Error("Invalid data format received from API");
+                }
 
                 // Process the data for the reports
                 const totalGoats = goats.length;
