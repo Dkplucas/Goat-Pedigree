@@ -451,29 +451,39 @@
         async getAllGoats() {
           try {
             const response = await fetch(`${API_BASE_URL}`);
-            if (!response.ok) {
-              throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            const goats = await response.json();
-            return this.resolveFamilyRelationships(goats);
+            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+            return await response.json();
           } catch (error) {
-            console.error("API Error:", error);
+            console.error("Failed to fetch goats:", error);
             throw error;
           }
         },
 
         async getGoatFamily(id) {
           try {
-            const response = await fetch(`${API_BASE_URL}${id}/family/`);
-            if (!response.ok) {
-              throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            return await response.json();
+            // First get the selected goat
+            const goatResponse = await fetch(`${API_BASE_URL}${id}/`);
+            if (!goatResponse.ok) throw new Error(`HTTP error! status: ${goatResponse.status}`);
+            const goat = await goatResponse.json();
+
+            // Then get all goats to find relationships
+            const allGoats = await this.getAllGoats();
+
+            // Manually find family members
+            return {
+              ...goat,
+              father: goat.father ? allGoats.find(g => g.id === goat.father.id) || null : null,
+              mother: goat.mother ? allGoats.find(g => g.id === goat.mother.id) || null : null,
+              children: allGoats.filter(g =>
+                (g.father && g.father.id === goat.id) ||
+                (g.mother && g.mother.id === goat.id)
+            };
           } catch (error) {
-            console.error("API Error:", error);
+            console.error("Failed to fetch goat family:", error);
             throw error;
           }
-        },
+        }
+      };
 
         // Helper function to resolve full goat objects for parents and children
         resolveFamilyRelationships(goats) {
@@ -902,25 +912,24 @@
           setError(null);
 
           try {
-            // Fetch all goats to get the complete details of the selected goat
-            const allGoats = await apiService.getAllGoats();
-            const selectedGoatDetails = allGoats.find((g) => g.id === goat.id);
-
-            if (!selectedGoatDetails) {
-              throw new Error("Selected goat details not found");
-            }
-
-            // Fetch the family data for the selected goat
             const familyData = await apiService.getGoatFamily(goat.id);
-
-            // Update the state with the complete goat details and family data
-            setSelectedGoat(selectedGoatDetails);
+            setSelectedGoat(familyData);
             setFamilyData(familyData);
           } catch (error) {
-            setError(
-              "Failed to load goat family data. Please try again later."
-            );
-            console.error("Error fetching goat family:", error);
+            setError("Failed to load goat details. Showing basic information.");
+            console.error("Error loading goat:", error);
+            // Fallback to just showing the goat without family data
+            const response = await fetch(`${API_BASE_URL}${goat.id}/`);
+            if (response.ok) {
+              const goatData = await response.json();
+              setSelectedGoat(goatData);
+              setFamilyData({
+                ...goatData,
+                father: null,
+                mother: null,
+                children: []
+              });
+            }
           } finally {
             setLoading(false);
           }
