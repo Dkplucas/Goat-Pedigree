@@ -451,7 +451,8 @@
         async getAllGoats() {
           try {
             const response = await fetch(`${API_BASE_URL}`);
-            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+            if (!response.ok)
+              throw new Error(`HTTP error! status: ${response.status}`);
             return await response.json();
           } catch (error) {
             console.error("Failed to fetch goats:", error);
@@ -463,7 +464,8 @@
           try {
             // First get the selected goat
             const goatResponse = await fetch(`${API_BASE_URL}${id}/`);
-            if (!goatResponse.ok) throw new Error(`HTTP error! status: ${goatResponse.status}`);
+            if (!goatResponse.ok)
+              throw new Error(`HTTP error! status: ${goatResponse.status}`);
             const goat = await goatResponse.json();
 
             // Then get all goats to find relationships
@@ -472,18 +474,23 @@
             // Manually find family members
             return {
               ...goat,
-              father: goat.father ? allGoats.find(g => g.id === goat.father.id) || null : null,
-              mother: goat.mother ? allGoats.find(g => g.id === goat.mother.id) || null : null,
-              children: allGoats.filter(g =>
-                (g.father && g.father.id === goat.id) ||
-                (g.mother && g.mother.id === goat.id)
+              father: goat.father
+                ? allGoats.find((g) => g.id === goat.father.id) || null
+                : null,
+              mother: goat.mother
+                ? allGoats.find((g) => g.id === goat.mother.id) || null
+                : null,
+              children: allGoats.filter(
+                (g) =>
+                  (g.father && g.father.id === goat.id) ||
+                  (g.mother && g.mother.id === goat.id)
+              ),
             };
           } catch (error) {
             console.error("Failed to fetch goat family:", error);
             throw error;
           }
-        }
-      };
+        },
 
         // Helper function to resolve full goat objects for parents and children
         resolveFamilyRelationships(goats) {
@@ -927,7 +934,7 @@
                 ...goatData,
                 father: null,
                 mother: null,
-                children: []
+                children: [],
               });
             }
           } finally {
