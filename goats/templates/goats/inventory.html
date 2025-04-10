@@ -794,53 +794,62 @@
                   ),
                   React.createElement(
                     "div",
-                    {
-                      className: "filter-selects" // Added filter-selects class
-                    },
-                    [
-                  React.createElement(
-                    "select",
-                    {
-                      className:
-                        "px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500",
-                      value: selectedBreed,
-                      onChange: (e) => setSelectedBreed(e.target.value),
-                      "data-name": "breed-select",
-                      "aria-label": "Select breed",
-                    },
-                    [
-                    React.createElement("option", { value: "" }, "All Breeds"),
+                    { className: "filter-selects" },
                     React.createElement(
-                      "option",
-                      { value: "Sahelien" },
-                      "Sahelien"
+                      "select",
+                      {
+                        className:
+                          "px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500",
+                        value: selectedBreed,
+                        onChange: (e) => setSelectedBreed(e.target.value),
+                        "data-name": "breed-select",
+                        "aria-label": "Select breed",
+                      },
+                      React.createElement(
+                        "option",
+                        { value: "" },
+                        "All Breeds"
+                      ),
+                      React.createElement(
+                        "option",
+                        { value: "Sahelien" },
+                        "Sahelien"
+                      ),
+                      React.createElement(
+                        "option",
+                        { value: "Djalonke" },
+                        "Djalonke"
+                      ),
+                      React.createElement("option", { value: "WAD" }, "WAD"),
+                      React.createElement(
+                        "option",
+                        { value: "Saanen" },
+                        "Saanen"
+                      )
                     ),
                     React.createElement(
-                      "option",
-                      { value: "Djalonke" },
-                      "Djalonke"
-                    ),
-                    React.createElement("option", { value: "WAD" }, "WAD"),
-                    React.createElement("option", { value: "Saanen" }, "Saanen")
-                    ]
-                  ),
-                  React.createElement(
-                    "select",
-                    {
-                      className:
-                        "px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500",
-                      value: selectedGender,
-                      onChange: (e) => setSelectedGender(e.target.value),
-                      "data-name": "gender-select",
-                      "aria-label": "Select gender",
-                    },
-                    [
-                    React.createElement("option", { value: "" }, "All Genders"),
-                    React.createElement("option", { value: "male" }, "Male"),
-                    React.createElement("option", { value: "female" }, "Female")
-                    ]
+                      "select",
+                      {
+                        className:
+                          "px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500",
+                        value: selectedGender,
+                        onChange: (e) => setSelectedGender(e.target.value),
+                        "data-name": "gender-select",
+                        "aria-label": "Select gender",
+                      },
+                      React.createElement(
+                        "option",
+                        { value: "" },
+                        "All Genders"
+                      ),
+                      React.createElement("option", { value: "male" }, "Male"),
+                      React.createElement(
+                        "option",
+                        { value: "female" },
+                        "Female"
+                      )
+                    )
                   )
-                  ]
                 )
               ),
               React.createElement(
