@@ -777,10 +777,10 @@
                 { className: "p-4 border-b" },
                 React.createElement(
                   "div",
-                  { className: "flex items-center space-x-4" },
+                  { className: "flex items-center space-x-4 filter-container" },
                   React.createElement(
                     "div",
-                    { className: "flex-1" },
+                    { className: "flex-1 search-input-container" },
                     React.createElement("input", {
                       type: "text",
                       placeholder: "Search goats...",
@@ -792,6 +792,11 @@
                       name: "search",
                     })
                   ),
+                  React.createElement(
+                    "div",
+                    {
+                      className: "filter-selects" // Added filter-selects class
+                    },
                   React.createElement(
                     "select",
                     {
