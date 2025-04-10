@@ -265,6 +265,29 @@
           max-height: 300px; /* Adjust this value based on your content */
           padding: 20px 0;
         }
+
+        .filter-container {
+          flex-direction: column;
+          gap: 8px;
+        }
+
+        .search-input-container {
+          width: 100%;
+          margin-bottom: 8px;
+        }
+
+        .filter-selects {
+          display: flex;
+          gap: 8px;
+          width: 100%;
+        }
+
+        .filter-select {
+          flex: 1;
+          min-width: 0; /* Prevents select from overflowing */
+          font-size: 14px; /* Smaller font size on mobile */
+          padding: 6px 8px; /* Smaller padding */
+        }
       }
     </style>
   </head>
