@@ -98,15 +98,17 @@ INTERNAL_IPS = [
 CORS_ALLOW_ALL_ORIGINS = True  # Only for development
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = ['http://localhost:9000',
-                        "http://64.226.88.215:9000",  
-                        "https://64.226.88.215:9000",
+                        'http://130.61.224.177',
+                        'https://130.61.224.177',
                         "http://goatpedigree.pro",
                         "https://goatpedigree.pro",
-                        "https://www.goatpedigree.pro",
+                        "https://www.goatpedigree.pro"
                         ]
 CSRF_TRUSTED_ORIGINS = ['https://goatpedigree.pro', 
                         'https://www.goatpedigree.pro',
-                        'http://64.226.88.215:9000']
+                        'https://130.61.224.177',
+                        'http://130.61.224.177'
+                        ]
 
 
 # Security Headers
