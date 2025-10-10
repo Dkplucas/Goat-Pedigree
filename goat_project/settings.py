@@ -43,6 +43,7 @@ ALLOWED_HOSTS = [
     'goatpedigree.pro',
     'www.goatpedigree.pro',
     'localhost',
+    '130.61.224.177',
     '127.0.0.1'
 ]
 
@@ -206,7 +207,13 @@ ADMINS = []
 SERVER_EMAIL = 'goatpedigree34@gmail.com'   # Email sender address
 
 # CSRF & Security
-CSRF_TRUSTED_ORIGINS = ['https://goatpedigree.pro', 'https://www.goatpedigree.pro', 'http://localhost:8000', 'http://127.0.0.1:8000', 'http://64.226.88.215:8000']
+CSRF_TRUSTED_ORIGINS = [
+    'https://goatpedigree.pro', 
+    'https://www.goatpedigree.pro', 
+    'http://localhost:8000', 
+    'http://130.61.224.177',
+    'https://130.61.224.177'
+    ]
 CSRF_COOKIE_SECURE = True  # Use secure cookies for CSRF protection
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 CSRF_USE_SESSIONS = False
