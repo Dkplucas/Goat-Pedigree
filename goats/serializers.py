@@ -10,7 +10,7 @@ class GoatSerializer(serializers.ModelSerializer):
     class Meta:
         model = Goat
         fields = [
-            'id', 'name', 'breed', 'gender', 'birth_date', 
+            'id', 'name', 'breed', 'gender', 'species', 'birth_date', 
             'registration', 'description', 'image', 'father', 
             'mother', 'children'
         ]

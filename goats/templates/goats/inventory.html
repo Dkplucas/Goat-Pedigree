@@ -638,6 +638,7 @@
           const [searchQuery, setSearchQuery] = React.useState("");
           const [selectedBreed, setSelectedBreed] = React.useState("");
           const [selectedGender, setSelectedGender] = React.useState("");
+          const [selectedSpecies, setSelectedSpecies] = React.useState("");
           const [loading, setLoading] = React.useState(true);
           const [error, setError] = React.useState(null);
           const [goatsData, setGoatsData] = React.useState([]);
@@ -686,7 +687,9 @@
             const matchesBreed = !selectedBreed || goat.breed === selectedBreed;
             const matchesGender =
               !selectedGender || goat.gender === selectedGender;
-            return matchesSearch && matchesBreed && matchesGender;
+            const matchesSpecies =
+              !selectedSpecies || goat.species === selectedSpecies;
+            return matchesSearch && matchesBreed && matchesGender && matchesSpecies;
           });
 
           if (loading) {
@@ -802,7 +805,7 @@
                       "select",
                       {
                         className:
-                          "px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500",
+                          "px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 mr-4",
                         value: selectedBreed,
                         onChange: (e) => setSelectedBreed(e.target.value),
                         "data-name": "breed-select",
@@ -823,18 +826,17 @@
                         { value: "Djalonke" },
                         "Djalonke"
                       ),
-                      React.createElement("option", { value: "WAD" }, "WAD"),
                       React.createElement(
                         "option",
-                        { value: "Saanen" },
-                        "Saanen"
+                        { value: "Djalonke/Sahelien" },
+                        "Djalonke/Sahelien"
                       )
                     ),
                     React.createElement(
                       "select",
                       {
                         className:
-                          "px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500",
+                          "px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 mr-4",
                         value: selectedGender,
                         onChange: (e) => setSelectedGender(e.target.value),
                         "data-name": "gender-select",
@@ -850,6 +852,28 @@
                         "option",
                         { value: "female" },
                         "Female"
+                      )
+                    ),
+                    React.createElement(
+                      "select",
+                      {
+                        className:
+                          "px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500",
+                        value: selectedSpecies,
+                        onChange: (e) => setSelectedSpecies(e.target.value),
+                        "data-name": "species-select",
+                        "aria-label": "Select species",
+                      },
+                      React.createElement(
+                        "option",
+                        { value: "" },
+                        "All Species"
+                      ),
+                      React.createElement("option", { value: "goat" }, "Goat"),
+                      React.createElement(
+                        "option",
+                        { value: "sheep" },
+                        "Sheep"
                       )
                     )
                   )

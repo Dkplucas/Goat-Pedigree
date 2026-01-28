@@ -519,7 +519,7 @@
                       "div",
                       { className: "flex justify-between mb-1" },
                       React.createElement("span", null, `${range} years`),
-                      React.createElement("span", null, `${count} goats`)
+                      React.createElement("span", null, `${count}`)
                     ),
                     React.createElement(
                       "div",
@@ -576,6 +576,7 @@
 
                 const breedCounts = {};
                 const genderCounts = { male: 0, female: 0 }; // Use lowercase keys
+                const speciesCounts = { goat: 0, sheep: 0 }; // Count species
                 const ageDistribution = {
                   "0-1": 0,
                   "1-3": 0,
@@ -589,6 +590,11 @@
 
                   // Count genders (use lowercase keys)
                   genderCounts[goat.gender.toLowerCase()] += 1;
+
+                  // Count species
+                  if (goat.species) {
+                    speciesCounts[goat.species] = (speciesCounts[goat.species] || 0) + 1;
+                  }
 
                   // Calculate age distribution
                   const birthDate = new Date(goat.birth_date);
@@ -625,6 +631,7 @@
                   breeds,
                   genders,
                   ageDistribution,
+                  speciesCounts,
                 });
 
                 // Debugging: Log the genders array
@@ -688,7 +695,7 @@
                     "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8",
                 },
                 React.createElement(StatCard, {
-                  title: "Total Goats",
+                  title: "Total Animals",
                   value: data.totalGoats,
                   icon: "goat",
                   color: "blue",
@@ -714,12 +721,52 @@
               ),
               React.createElement(
                 "div",
-                { className: "grid grid-cols-1 lg:grid-cols-2 gap-6" },
+                { className: "grid grid-cols-1 lg:grid-cols-2 gap-8 mt-10" },
                 React.createElement(BreedDistribution, { data: data.breeds }),
-                React.createElement(GenderDistribution, { data: data.genders }),
+                React.createElement(GenderDistribution, { data: data.genders })
+              ),
+              React.createElement(
+                "div",
+                { className: "grid grid-cols-1 lg:grid-cols-2 gap-8 mt-8" },
                 React.createElement(AgeDistribution, {
                   data: data.ageDistribution,
-                })
+                }),
+                React.createElement(
+                  "div",
+                  { className: "bg-white rounded-lg shadow-lg p-6" },
+                  React.createElement(
+                    "h3",
+                    { className: "text-xl font-bold mb-8" },
+                    React.createElement("i", {
+                      className: "fas fa-list mr-2",
+                    }),
+                    "Species Distribution"
+                  ),
+                  React.createElement(
+                    "div",
+                    { className: "grid grid-cols-2 gap-6" },
+                    React.createElement(
+                      "div",
+                      null,
+                      React.createElement(StatCard, {
+                        title: "Goat",
+                        value: data.speciesCounts.goat || 0,
+                        icon: "paw",
+                        color: "purple",
+                      })
+                    ),
+                    React.createElement(
+                      "div",
+                      null,
+                      React.createElement(StatCard, {
+                        title: "Sheep",
+                        value: data.speciesCounts.sheep || 0,
+                        icon: "cow",
+                        color: "orange",
+                      })
+                    )
+                  )
+                )
               )
             )
           );

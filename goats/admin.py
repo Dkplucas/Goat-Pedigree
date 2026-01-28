@@ -17,8 +17,8 @@ class UserAdmin(admin.ModelAdmin):
 
 @admin.register(Goat)
 class GoatAdmin(admin.ModelAdmin):
-    list_display = ("name", "breed", "gender", "birth_date", "registration")
+    list_display = ("name", "breed", "species", "gender", "birth_date", "registration")
     search_fields = ("name", "breed", "registration")
-    list_filter = ("breed", "gender")
+    list_filter = ("breed", "species", "gender")
     list_per_page = 20
 

@@ -1,9 +1,15 @@
 from django.db import models
 
 class Goat(models.Model):
+    SPECIES_CHOICES = [
+        ('goat', 'Goat'),
+        ('sheep', 'Sheep'),
+    ]
+    
     name = models.CharField(max_length=200)
     breed = models.CharField(max_length=100)
     gender = models.CharField(max_length=10, null=True,choices=[('male', 'Male'), ('female', 'Female')])
+    species = models.CharField(max_length=10, choices=SPECIES_CHOICES, default='goat')
     birth_date = models.DateField(null=True, blank=True)
     registration = models.CharField(max_length=50, null=True,blank=True)
     description = models.TextField(null=True, blank=True)
