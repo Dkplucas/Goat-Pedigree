@@ -150,6 +150,9 @@ DATABASES = {
         'PASSWORD': '123456789',  # Replace with actual password
         'HOST': 'localhost',
         'PORT': '5432',
+        'OPTIONS': {
+            'connect_timeout': 5,
+        },
     }
 }
 
