@@ -153,7 +153,7 @@ sudo systemctl stop gunicorn
 cd /home/goat_app/apps/Goat-Pedigree/
 git reset --hard <previous-commit-hash>
 
-# Restore database if migrations caused issues
+# Restore database if migrations caused issues (replace YYYYMMDD_HHMMSS with your actual backup timestamp)
 sudo -u postgres psql goatpedigreedb < ~/backup_YYYYMMDD_HHMMSS.sql
 
 # Restart services

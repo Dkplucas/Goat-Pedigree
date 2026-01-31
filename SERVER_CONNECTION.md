@@ -172,8 +172,8 @@ sudo systemctl stop gunicorn
 git log --oneline -10  # Find the previous commit hash
 git reset --hard <previous-commit-hash>
 
-# Restore database if needed
-sudo -u postgres psql goatpedigree goatpedigreedb < ~/backup_YYYYMMDD_HHMMSS.sql
+# Restore database if needed (replace YYYYMMDD_HHMMSS with your actual backup timestamp)
+sudo -u postgres psql goatpedigreedb < ~/backup_YYYYMMDD_HHMMSS.sql
 
 # Restart service
 sudo systemctl start gunicorn
