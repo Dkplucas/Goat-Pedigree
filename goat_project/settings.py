@@ -180,9 +180,10 @@ USE_TZ = True
 
 # Static files configuration
 STATIC_URL = '/static/'
-STATIC_ROOT = '/home/lucas/Goat-Pedigree/staticfiles'
+STATIC_ROOT = '/home/goat_app/apps/Goat-Pedigree/staticfiles'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
+    os.path.join(BASE_DIR, 'theme', 'static'),
 ]
 
 # Media files configuration
