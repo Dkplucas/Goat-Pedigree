@@ -275,15 +275,19 @@
 
         .filter-selects {
           display: flex;
-          gap: 8px;
+          flex-wrap: wrap;
+          gap: 6px;
           width: 100%;
         }
 
-        .filter-select {
+        .filter-selects select {
           flex: 1;
           min-width: 0; /* Prevents select from overflowing */
-          font-size: 14px; /* Smaller font size on mobile */
-          padding: 6px 8px; /* Smaller padding */
+          font-size: 12px !important; /* Smaller font size on mobile */
+          padding: 6px 8px !important; /* Smaller padding */
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
         }
       }
     </style>
@@ -785,7 +789,7 @@
                       type: "text",
                       placeholder: "Search goats...",
                       className:
-                        "w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500",
+                        "w-full px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-xs sm:text-base",
                       value: searchQuery,
                       onChange: (e) => setSearchQuery(e.target.value),
                       "data-name": "search-input",
@@ -799,7 +803,7 @@
                       "select",
                       {
                         className:
-                          "px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 mr-4",
+                          "px-2 py-1.5 sm:px-4 sm:py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 mr-2 sm:mr-4 text-xs sm:text-base",
                         value: selectedBreed,
                         onChange: (e) => setSelectedBreed(e.target.value),
                         "data-name": "breed-select",
@@ -830,7 +834,7 @@
                       "select",
                       {
                         className:
-                          "px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 mr-4",
+                          "px-2 py-1.5 sm:px-4 sm:py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 mr-2 sm:mr-4 text-xs sm:text-base",
                         value: selectedGender,
                         onChange: (e) => setSelectedGender(e.target.value),
                         "data-name": "gender-select",
@@ -852,7 +856,7 @@
                       "select",
                       {
                         className:
-                          "px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500",
+                          "px-2 py-1.5 sm:px-4 sm:py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-xs sm:text-base",
                         value: selectedSpecies,
                         onChange: (e) => setSelectedSpecies(e.target.value),
                         "data-name": "species-select",
