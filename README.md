@@ -250,7 +250,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Support
 
-For support, email support@goatpedigree.pro or open an issue on GitHub.
+For support, email dossoukponganfleming@gmail.com or open an issue on GitHub.
 
 ## Roadmap
 
