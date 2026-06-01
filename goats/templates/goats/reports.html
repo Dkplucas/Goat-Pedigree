@@ -377,21 +377,22 @@
           }
         }
 
-        function BreedDistribution({ data }) {
+        function BreedDistribution({ data, species, icon, color }) {
           try {
+            const speciesLabel = species.charAt(0).toUpperCase() + species.slice(1);
             return React.createElement(
               "div",
               {
                 className: "bg-white rounded-lg shadow-lg p-6",
-                "data-name": "breed-distribution",
+                "data-name": `breed-distribution-${species}`,
               },
               React.createElement(
                 "h3",
                 { className: "text-xl font-bold mb-4" },
-                React.createElement("i", { className: "fas fa-dna mr-2" }),
-                "Breed Distribution"
+                React.createElement("i", { className: `fas fa-${icon} mr-2` }),
+                `${speciesLabel} Breeds`
               ),
-              React.createElement(
+              data.length > 0 ? React.createElement(
                 "div",
                 { className: "space-y-4" },
                 data.map((breed, index) =>
@@ -408,12 +409,16 @@
                       "div",
                       { className: "w-full bg-gray-200 rounded-full h-2" },
                       React.createElement("div", {
-                        className: "bg-blue-600 rounded-full h-2",
+                        className: `${color} rounded-full h-2`,
                         style: { width: `${breed.percentage}%` },
                       })
                     )
                   )
                 )
+              ) : React.createElement(
+                "div",
+                { className: "text-gray-500 text-center py-4" },
+                "No data available"
               )
             );
           } catch (error) {
@@ -570,6 +575,8 @@
                   }, 0) / totalGoats;
 
                 const breedCounts = {};
+                const goatBreedCounts = {};
+                const sheepBreedCounts = {};
                 const genderCounts = { male: 0, female: 0 }; // Use lowercase keys
                 const speciesCounts = { goat: 0, sheep: 0 }; // Count species
                 const ageDistribution = {
@@ -582,6 +589,13 @@
                 goats.forEach((goat) => {
                   // Count breeds
                   breedCounts[goat.breed] = (breedCounts[goat.breed] || 0) + 1;
+
+                  // Count breeds by species
+                  if (goat.species === 'goat') {
+                    goatBreedCounts[goat.breed] = (goatBreedCounts[goat.breed] || 0) + 1;
+                  } else if (goat.species === 'sheep') {
+                    sheepBreedCounts[goat.breed] = (sheepBreedCounts[goat.breed] || 0) + 1;
+                  }
 
                   // Count genders (use lowercase keys)
                   genderCounts[goat.gender.toLowerCase()] += 1;
@@ -610,6 +624,24 @@
                   })
                 );
 
+                // Convert goat breeds to percentages
+                const goatBreeds = Object.entries(goatBreedCounts).map(
+                  ([breed, count]) => ({
+                    breed,
+                    count,
+                    percentage: speciesCounts.goat > 0 ? ((count / speciesCounts.goat) * 100).toFixed(1) : 0,
+                  })
+                );
+
+                // Convert sheep breeds to percentages
+                const sheepBreeds = Object.entries(sheepBreedCounts).map(
+                  ([breed, count]) => ({
+                    breed,
+                    count,
+                    percentage: speciesCounts.sheep > 0 ? ((count / speciesCounts.sheep) * 100).toFixed(1) : 0,
+                  })
+                );
+
                 // Convert gender counts to percentages
                 const genders = Object.entries(genderCounts).map(
                   ([gender, count]) => ({
@@ -624,6 +656,8 @@
                   totalGoats,
                   averageAge: averageAge.toFixed(1),
                   breeds,
+                  goatBreeds,
+                  sheepBreeds,
                   genders,
                   ageDistribution,
                   speciesCounts,
@@ -717,15 +751,30 @@
               React.createElement(
                 "div",
                 { className: "grid grid-cols-1 lg:grid-cols-2 gap-8 mt-10" },
-                React.createElement(BreedDistribution, { data: data.breeds }),
-                React.createElement(GenderDistribution, { data: data.genders })
+                React.createElement(BreedDistribution, {
+                  data: data.goatBreeds,
+                  species: "goat",
+                  icon: "goat",
+                  color: "bg-green-500"
+                }),
+                React.createElement(BreedDistribution, {
+                  data: data.sheepBreeds,
+                  species: "sheep",
+                  icon: "flock",
+                  color: "bg-green-500"
+                })
               ),
               React.createElement(
                 "div",
                 { className: "grid grid-cols-1 lg:grid-cols-2 gap-8 mt-8" },
+                React.createElement(GenderDistribution, { data: data.genders }),
                 React.createElement(AgeDistribution, {
                   data: data.ageDistribution,
-                }),
+                })
+              ),
+              React.createElement(
+                "div",
+                { className: "mt-8" },
                 React.createElement(
                   "div",
                   { className: "bg-white rounded-lg shadow-lg p-6" },
@@ -746,8 +795,8 @@
                       React.createElement(StatCard, {
                         title: "Goat",
                         value: data.speciesCounts.goat || 0,
-                        icon: "paw",
-                        color: "purple",
+                        icon: "goat",
+                        color: "blue",
                       })
                     ),
                     React.createElement(
@@ -756,7 +805,7 @@
                       React.createElement(StatCard, {
                         title: "Sheep",
                         value: data.speciesCounts.sheep || 0,
-                        icon: "cow",
+                        icon: "sheep",
                         color: "orange",
                       })
                     )
